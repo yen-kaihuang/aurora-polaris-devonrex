@@ -12,6 +12,183 @@ const t = useTranslations(lang);
 ---
 
 <BaseLayout title={t('site.name')}>
-  <h1>{t('nav.home')}</h1>
-  <p>Phase 1 placeholder — 內容於後續階段填入。</p>
+  <!-- Hero -->
+  <section class="hero">
+    <img src="/images/home/hero.jpg" alt="Aurora Polaris Devon Rex cats" class="hero-img" />
+    <div class="hero-text">
+      <h1>{t('home.heroTitle')}</h1>
+    </div>
+  </section>
+
+  <!-- Welcome -->
+  <section class="welcome">
+    <div class="welcome-inner">
+      <div class="welcome-photo">
+        <img src="/images/home/welcome-cat.jpg" alt="Devon Rex cat" />
+      </div>
+      <div class="welcome-content">
+        <p class="welcome-label">{t('home.welcomeLabel')}</p>
+        <h2 class="welcome-title">{t('home.welcomeTitle')}</h2>
+        <div class="welcome-body">
+          {t('home.welcomeBody').split('\n\n').map((para: string) => (
+            <p>{para}</p>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kittens Gallery -->
+  <section class="kittens">
+    <h2 class="kittens-title">{t('home.kittensTitle')}</h2>
+    <div class="kittens-grid">
+      <img src="/images/home/kitten-1.jpg" alt="Available Devon Rex kitten" />
+      <img src="/images/home/kitten-2.jpg" alt="Available Devon Rex kitten" />
+      <img src="/images/home/kitten-3.jpg" alt="Available Devon Rex kitten" />
+    </div>
+  </section>
+
+  <!-- Why Section -->
+  <section class="why">
+    <img src="/images/home/wave-bg.svg" alt="" class="why-wave-top" aria-hidden="true" />
+    <div class="why-inner">
+      <h2 class="why-title">{t('home.whyTitle')}</h2>
+      <p class="why-body">{t('home.whyBody')}</p>
+    </div>
+    <img src="/images/home/wave-divider.svg" alt="" class="why-wave-bottom" aria-hidden="true" />
+  </section>
 </BaseLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .hero-text {
+    position: absolute;
+    top: 32%;
+    left: 64px;
+    max-width: 600px;
+  }
+
+  .hero-text h1 {
+    font-family: var(--font-brand);
+    font-size: clamp(48px, 7vw, 96px);
+    color: var(--color-text-light);
+    line-height: 1.1;
+  }
+
+  /* Welcome */
+  .welcome {
+    background-color: var(--color-bg-dark);
+    padding: 80px 64px;
+  }
+
+  .welcome-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .welcome-photo img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .welcome-label {
+    font-size: 28px;
+    color: var(--color-text);
+    margin-bottom: 6px;
+  }
+
+  .welcome-title {
+    font-size: clamp(32px, 4.5vw, 60px);
+    color: var(--color-bg);
+    line-height: 1.1;
+    margin-bottom: 28px;
+  }
+
+  .welcome-body {
+    font-size: 17px;
+    color: var(--color-text);
+    line-height: 1.75;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* Kittens */
+  .kittens {
+    padding: 80px 64px;
+    background-color: var(--color-bg);
+  }
+
+  .kittens-title {
+    text-align: center;
+    font-size: clamp(24px, 3.5vw, 48px);
+    color: var(--color-text);
+    margin-bottom: 48px;
+  }
+
+  .kittens-grid {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .kittens-grid img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+
+  /* Why */
+  .why {
+    background-color: var(--color-bg-accent);
+    text-align: center;
+  }
+
+  .why-wave-top,
+  .why-wave-bottom {
+    width: 100%;
+    display: block;
+  }
+
+  .why-inner {
+    padding: 48px 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .why-title {
+    font-size: clamp(32px, 4.5vw, 60px);
+    color: var(--color-text-light);
+    margin-bottom: 28px;
+  }
+
+  .why-body {
+    font-size: 17px;
+    color: var(--color-text);
+    line-height: 1.8;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+</style>
