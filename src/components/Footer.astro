@@ -6,13 +6,16 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<footer id="contact" class="site-footer">
-  <img src="/images/home/wave-footer.svg" alt="" class="footer-wave" aria-hidden="true" />
+<section id="contact" class="footer-section">
+  <!-- "Contact Us" 標題在淺色背景區，波浪上方 -->
+  <h2 class="contact-heading">{t('home.contactTitle')}</h2>
 
-  <div class="footer-body">
-    <div class="footer-inner">
-      <div class="footer-contact">
-        <h2 class="contact-title">{t('home.contactTitle')}</h2>
+  <footer class="site-footer">
+    <img src="/images/home/wave-footer.svg" alt="" class="footer-wave" aria-hidden="true" />
+
+    <div class="footer-body">
+      <div class="contact-wrap">
+        <img src="/images/home/contact-circle.svg" alt="" class="contact-circle" aria-hidden="true" />
         <ul class="contact-list">
           <li><a href={`mailto:${t('home.email')}`}>Email: {t('home.email')}</a></li>
           <li>Instagram: {t('home.instagram')}</li>
@@ -21,34 +24,40 @@ const t = useTranslations(lang);
         </ul>
       </div>
 
-      <div class="footer-logos">
-        <img src="/images/home/logo-tica.png" alt="TICA" />
-        <img src="/images/home/logo-trupanion.png" alt="Trupanion" />
-        <img src="/images/home/logo-petsecure-1.png" alt="PetSecure" />
-        <img src="/images/home/logo-petsecure-2.png" alt="PetSecure" />
+      <div class="footer-copy">
+        <p>{t('home.copyright1')}</p>
+        <p>{t('home.copyright2')}</p>
       </div>
     </div>
 
-    <div class="footer-copy">
-      <p>{t('home.copyright1')}</p>
-      <p>{t('home.copyright2')}</p>
+    <div class="paw-row" aria-hidden="true">
+      <img src="/images/home/paw-1.png" alt="" />
+      <img src="/images/home/paw-2.png" alt="" />
+      <img src="/images/home/paw-1.png" alt="" />
+      <img src="/images/home/paw-2.png" alt="" />
+      <img src="/images/home/paw-1.png" alt="" />
+      <img src="/images/home/paw-2.png" alt="" />
     </div>
-  </div>
-
-  <div class="paw-row" aria-hidden="true">
-    <img src="/images/home/paw-1.png" alt="" />
-    <img src="/images/home/paw-2.png" alt="" />
-    <img src="/images/home/paw-1.png" alt="" />
-    <img src="/images/home/paw-2.png" alt="" />
-    <img src="/images/home/paw-1.png" alt="" />
-    <img src="/images/home/paw-2.png" alt="" />
-  </div>
-</footer>
+  </footer>
+</section>
 
 <style>
+  /* 淺色包覆區（含標題） */
+  .footer-section {
+    background-color: var(--color-bg);
+    font-family: var(--font-brand);
+  }
+
+  .contact-heading {
+    font-size: clamp(40px, 5vw, 64px);
+    color: var(--color-text);
+    text-align: center;
+    padding: 60px 80px 40px;
+  }
+
+  /* 深色 footer 本體 */
   .site-footer {
     background-color: var(--color-bg-dark);
-    font-family: var(--font-brand);
     color: var(--color-text);
   }
 
@@ -62,22 +71,28 @@ const t = useTranslations(lang);
     padding: 60px 80px 40px;
   }
 
-  .footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 40px;
-    margin-bottom: 48px;
-    flex-wrap: wrap;
+  /* 聯絡資訊 + 圓圈裝飾 */
+  .contact-wrap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 40px;
   }
 
-  .contact-title {
-    font-size: 28px;
-    margin-bottom: 20px;
+  .contact-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140%;
+    height: 140%;
+    opacity: 0.45;
+    pointer-events: none;
   }
 
   .contact-list {
-    font-size: 18px;
+    position: relative;
+    z-index: 1;
+    font-size: 20px;
     line-height: 2;
   }
 
@@ -89,21 +104,7 @@ const t = useTranslations(lang);
     opacity: 0.7;
   }
 
-  .footer-logos {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-self: center;
-  }
-
-  .footer-logos img {
-    max-height: 72px;
-    width: auto;
-    object-fit: contain;
-  }
-
+  /* 版權 */
   .footer-copy {
     text-align: center;
     font-size: 13px;
@@ -111,6 +112,7 @@ const t = useTranslations(lang);
     line-height: 1.8;
   }
 
+  /* 爪印 */
   .paw-row {
     display: flex;
     justify-content: space-around;

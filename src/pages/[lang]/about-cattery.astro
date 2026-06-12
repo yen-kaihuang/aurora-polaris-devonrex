@@ -13,32 +13,42 @@ const t = useTranslations(lang);
 
 <BaseLayout title={t('cattery.heroTitle')}>
   <div class="page-cattery">
-    <!-- Hero -->
+    <!-- Hero：標題在左下角 -->
     <section class="cattery-hero">
       <img src="/images/about-cattery/hero.jpg" alt="Our cattery" class="cattery-hero-img" />
-      <div class="cattery-hero-overlay">
-        <h1>{t('cattery.heroTitle')}</h1>
-        <p class="hero-subtitle">{t('cattery.subtitle')}</p>
+      <div class="cattery-hero-text">
+        <h1>About<br />Our Cattery</h1>
       </div>
     </section>
 
-    <!-- Section 1：貓舍介紹 -->
+    <!-- 副標題：英雄下方淡色區 -->
+    <p class="cattery-subtitle">{t('cattery.subtitle')}</p>
+
+    <!-- Section 1：貓舍介紹，accent 卡片從左上角透出 -->
     <section class="cattery-section">
-      <h2 class="section-label">{t('cattery.section1Title')}</h2>
-      <div class="content-card">
-        {t('cattery.body1').split('\n\n').map((para: string) => (
-          <p>{para}</p>
-        ))}
+      <div class="card-stack card-stack--left">
+        <div class="card-front">
+          <h2 class="section-label">{t('cattery.section1Title')}</h2>
+          <div class="card-body">
+            {t('cattery.body1').split('\n\n').map((para: string) => (
+              <p>{para}</p>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Section 2：飲食 -->
+    <!-- Section 2：飲食，accent 卡片從右上角透出 -->
     <section class="cattery-section cattery-section--diet">
-      <h2 class="section-label">{t('cattery.section2Title')}</h2>
-      <div class="content-card content-card--light">
-        {t('cattery.body2').split('\n\n').map((para: string) => (
-          <p>{para}</p>
-        ))}
+      <div class="card-stack card-stack--right">
+        <div class="card-front">
+          <h2 class="section-label">{t('cattery.section2Title')}</h2>
+          <div class="card-body card-body--dark">
+            {t('cattery.body2').split('\n\n').map((para: string) => (
+              <p>{para}</p>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -47,15 +57,13 @@ const t = useTranslations(lang);
 <style>
   .page-cattery {
     background-color: var(--color-bg-dark);
-    min-height: 100vh;
     font-family: var(--font-brand);
   }
 
   /* Hero */
   .cattery-hero {
     position: relative;
-    height: 70vh;
-    min-height: 480px;
+    height: clamp(400px, 49.5vw, 713px);
     overflow: hidden;
   }
 
@@ -63,60 +71,96 @@ const t = useTranslations(lang);
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center top;
   }
 
-  .cattery-hero-overlay {
+  .cattery-hero-text {
     position: absolute;
-    bottom: 64px;
-    left: 64px;
+    bottom: 80px;
+    left: 80px;
     color: white;
   }
 
-  .cattery-hero-overlay h1 {
-    font-size: clamp(36px, 5vw, 64px);
+  .cattery-hero-text h1 {
+    font-family: var(--font-brand);
+    font-size: clamp(36px, 4.4vw, 64px);
     line-height: 1.1;
+    color: white;
   }
 
-  .hero-subtitle {
-    font-size: 28px;
-    margin-top: 8px;
-    opacity: 0.85;
+  /* 副標題 */
+  .cattery-subtitle {
+    font-size: clamp(22px, 2.8vw, 40px);
+    color: var(--color-text-light);
+    text-align: center;
+    padding: 52px 80px 48px;
   }
 
   /* Sections */
   .cattery-section {
-    padding: 80px 80px;
+    padding: 48px 80px 80px;
   }
 
   .cattery-section--diet {
-    background-color: var(--color-bg-accent);
+    padding-top: 0;
+  }
+
+  /* 雙層疊放卡片 */
+  .card-stack {
+    position: relative;
+    max-width: 1081px;
+    margin: 0 auto;
+  }
+
+  /* accent 卡片：左上角透出 */
+  .card-stack--left::before {
+    content: '';
+    position: absolute;
+    top: -48px;
+    left: -28px;
+    width: 100%;
+    height: 100%;
+    background: rgba(220, 204, 194, 0.73);
+    z-index: 0;
+  }
+
+  /* accent 卡片：右上角透出 */
+  .card-stack--right::before {
+    content: '';
+    position: absolute;
+    top: -53px;
+    right: -45px;
+    width: 100%;
+    height: 100%;
+    background: #dcccc2;
+    z-index: 0;
+  }
+
+  .card-front {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.51);
+    padding: 48px 72px;
   }
 
   .section-label {
-    font-size: 18px;
-    color: rgba(83, 86, 92, 0.7);
+    font-size: 20px;
+    color: rgba(83, 86, 92, 0.79);
     text-align: center;
-    margin-bottom: 32px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    margin-bottom: 36px;
   }
 
-  .content-card {
-    background: rgba(220, 204, 194, 0.73);
-    padding: 48px 64px;
-    max-width: 1080px;
-    margin: 0 auto;
+  .card-body {
+    font-size: 20px;
+    color: var(--color-text-light);
+    text-align: center;
+    line-height: 1.75;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    font-size: 17px;
-    color: white;
-    line-height: 1.75;
-    text-align: center;
+    gap: 16px;
   }
 
-  .content-card--light {
-    background: rgba(255, 255, 255, 0.55);
-    color: var(--color-text);
+  .card-body--dark {
+    color: rgba(83, 86, 92, 0.79);
   }
 </style>
