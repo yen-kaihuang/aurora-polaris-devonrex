@@ -1,0 +1,30 @@
+---
+// src/components/Nav.astro
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import LangSwitcher from './LangSwitcher.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const base = `/${lang}`;
+
+const links = [
+  { href: `${base}/`, label: t('nav.home') },
+  { href: `${base}/kings-and-queens`, label: t('nav.kingsQueens') },
+  { href: `${base}/available-kittens`, label: t('nav.availableKittens') },
+  { href: `${base}/litters`, label: t('nav.litters') },
+  { href: `${base}/about-cattery`, label: t('nav.aboutCattery') },
+  { href: `${base}/about-devon-rex`, label: t('nav.aboutDevonRex') },
+];
+---
+
+<header>
+  <a href={base + '/'}>{t('site.name')}</a>
+  <nav aria-label="Main">
+    <ul>
+      {links.map((l) => (
+        <li><a href={l.href}>{l.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+  <LangSwitcher />
+</header>

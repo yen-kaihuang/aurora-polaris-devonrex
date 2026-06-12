@@ -1,0 +1,21 @@
+---
+// src/components/LangSwitcher.astro
+import { getLangFromUrl } from '../i18n/utils';
+import { languages } from '../i18n/ui';
+
+const current = getLangFromUrl(Astro.url);
+// 去掉現有語言前綴，取得不含語言的路徑（保留結尾）
+const rest = Astro.url.pathname.replace(/^\/(en|zh)/, '') || '/';
+---
+
+<nav aria-label="Language">
+  <ul>
+    {Object.entries(languages).map(([code, label]) => (
+      <li>
+        {code === current
+          ? <span aria-current="true">{label}</span>
+          : <a href={`/${code}${rest}`}>{label}</a>}
+      </li>
+    ))}
+  </ul>
+</nav>
