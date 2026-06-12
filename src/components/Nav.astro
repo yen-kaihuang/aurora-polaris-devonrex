@@ -14,13 +14,14 @@ const links = [
   { href: `${base}/litters`, label: t('nav.litters') },
   { href: `${base}/about-cattery`, label: t('nav.aboutCattery') },
   { href: `${base}/about-devon-rex`, label: t('nav.aboutDevonRex') },
+  { href: '#contact', label: t('nav.contact') },
 ];
 ---
 
-<header>
-  <a href={base + '/'}>{t('site.name')}</a>
+<header class="site-header">
+  <a class="site-logo" href={`${base}/`}>{t('site.name')}</a>
   <nav aria-label="Main">
-    <ul>
+    <ul class="nav-links">
       {links.map((l) => (
         <li><a href={l.href}>{l.label}</a></li>
       ))}
@@ -28,3 +29,44 @@ const links = [
   </nav>
   <LangSwitcher />
 </header>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 40px;
+    background: transparent;
+    font-family: var(--font-brand);
+    color: var(--color-text);
+  }
+
+  .site-logo {
+    font-size: 13px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    opacity: 0.85;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 16px;
+    font-size: 15px;
+    flex: 1;
+  }
+
+  .nav-links a {
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover {
+    opacity: 0.6;
+  }
+</style>

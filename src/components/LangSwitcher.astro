@@ -4,11 +4,10 @@ import { getLangFromUrl } from '../i18n/utils';
 import { languages } from '../i18n/ui';
 
 const current = getLangFromUrl(Astro.url);
-// 去掉現有語言前綴，取得不含語言的路徑（保留結尾）
 const rest = Astro.url.pathname.replace(/^\/(en|zh)/, '') || '/';
 ---
 
-<nav aria-label="Language">
+<nav aria-label="Language" class="lang-switcher">
   <ul>
     {Object.entries(languages).map(([code, label]) => (
       <li>
@@ -19,3 +18,26 @@ const rest = Astro.url.pathname.replace(/^\/(en|zh)/, '') || '/';
     ))}
   </ul>
 </nav>
+
+<style>
+  .lang-switcher ul {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .lang-switcher span[aria-current] {
+    opacity: 0.45;
+    font-size: 14px;
+  }
+
+  .lang-switcher a {
+    transition: opacity 0.2s;
+  }
+
+  .lang-switcher a:hover {
+    opacity: 0.6;
+  }
+</style>
