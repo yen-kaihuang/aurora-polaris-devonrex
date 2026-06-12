@@ -1,0 +1,126 @@
+---
+// src/components/Footer.astro
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<footer id="contact" class="site-footer">
+  <img src="/images/home/wave-footer.svg" alt="" class="footer-wave" aria-hidden="true" />
+
+  <div class="footer-body">
+    <div class="footer-inner">
+      <div class="footer-contact">
+        <h2 class="contact-title">{t('home.contactTitle')}</h2>
+        <ul class="contact-list">
+          <li><a href={`mailto:${t('home.email')}`}>Email: {t('home.email')}</a></li>
+          <li>Instagram: {t('home.instagram')}</li>
+          <li>Facebook: {t('home.facebook')}</li>
+          <li>WeChat: {t('home.wechat')}</li>
+        </ul>
+      </div>
+
+      <div class="footer-logos">
+        <img src="/images/home/logo-tica.png" alt="TICA" />
+        <img src="/images/home/logo-trupanion.png" alt="Trupanion" />
+        <img src="/images/home/logo-petsecure-1.png" alt="PetSecure" />
+        <img src="/images/home/logo-petsecure-2.png" alt="PetSecure" />
+      </div>
+    </div>
+
+    <div class="footer-copy">
+      <p>{t('home.copyright1')}</p>
+      <p>{t('home.copyright2')}</p>
+    </div>
+  </div>
+
+  <div class="paw-row" aria-hidden="true">
+    <img src="/images/home/paw-1.png" alt="" />
+    <img src="/images/home/paw-2.png" alt="" />
+    <img src="/images/home/paw-1.png" alt="" />
+    <img src="/images/home/paw-2.png" alt="" />
+    <img src="/images/home/paw-1.png" alt="" />
+    <img src="/images/home/paw-2.png" alt="" />
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-bg-dark);
+    font-family: var(--font-brand);
+    color: var(--color-text);
+  }
+
+  .footer-wave {
+    width: 100%;
+    display: block;
+    margin-bottom: -4px;
+  }
+
+  .footer-body {
+    padding: 60px 80px 40px;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+
+  .contact-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .contact-list {
+    font-size: 18px;
+    line-height: 2;
+  }
+
+  .contact-list a {
+    transition: opacity 0.2s;
+  }
+
+  .contact-list a:hover {
+    opacity: 0.7;
+  }
+
+  .footer-logos {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-self: center;
+  }
+
+  .footer-logos img {
+    max-height: 72px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .footer-copy {
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.65;
+    line-height: 1.8;
+  }
+
+  .paw-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 40px 12px;
+  }
+
+  .paw-row img {
+    width: 72px;
+    height: auto;
+    opacity: 0.55;
+  }
+</style>
