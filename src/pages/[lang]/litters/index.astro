@@ -9,9 +9,122 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
+const base = `/${lang}`;
+
+const years = [
+  { year: 2024, key: 'litters.2024title' as const, img: '/images/home/kitten-1.jpg' },
+  { year: 2023, key: 'litters.2023title' as const, img: '/images/home/kitten-2.jpg' },
+  { year: 2022, key: 'litters.2022title' as const, img: '/images/home/kitten-3.jpg' },
+];
 ---
 
-<BaseLayout title={t('nav.litters')}>
-  <h1>{t('nav.litters')}</h1>
-  <p>Phase 1 placeholder — 內容於後續階段填入。</p>
+<BaseLayout title={t('litters.indexTitle')}>
+  <div class="page-litters">
+    <section class="litters-hero">
+      <img src="/images/home/hero.jpg" alt="Aurora Polaris Devon Rex" class="litters-hero-img" />
+      <div class="litters-hero-overlay">
+        <h1>{t('litters.indexTitle')}</h1>
+      </div>
+    </section>
+
+    <section class="litters-index">
+      <div class="litters-grid">
+        {years.map(({ year, key, img }) => (
+          <a href={`${base}/litters/${year}`} class="litter-card">
+            <div class="litter-card-img-wrap">
+              <img src={img} alt={t(key)} class="litter-card-img" />
+            </div>
+            <p class="litter-card-label">{t(key)}</p>
+          </a>
+        ))}
+        <div class="litter-card litter-card--coming">
+          <div class="litter-card-img-wrap">
+            <img src="/images/home/kitten-1.jpg" alt={t('litters.2025title')} class="litter-card-img" />
+          </div>
+          <p class="litter-card-label">{t('litters.2025title')}</p>
+        </div>
+      </div>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .page-litters {
+    background-color: var(--color-bg);
+    font-family: var(--font-brand);
+    min-height: 100vh;
+  }
+
+  .litters-hero {
+    position: relative;
+    height: 60vh;
+    min-height: 380px;
+    overflow: hidden;
+  }
+
+  .litters-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .litters-hero-overlay {
+    position: absolute;
+    bottom: 64px;
+    left: 64px;
+    color: var(--color-text-light);
+  }
+
+  .litters-hero-overlay h1 {
+    font-size: clamp(36px, 5vw, 64px);
+  }
+
+  .litters-index {
+    padding: 80px 64px;
+  }
+
+  .litters-grid {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 32px;
+  }
+
+  .litter-card {
+    display: block;
+    color: var(--color-text);
+    transition: transform 0.2s;
+  }
+
+  .litter-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .litter-card--coming {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  .litter-card-img-wrap {
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .litter-card-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+
+  .litter-card:hover .litter-card-img {
+    transform: scale(1.04);
+  }
+
+  .litter-card-label {
+    font-size: 22px;
+    text-align: center;
+  }
+</style>

@@ -9,9 +9,139 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
+
+const facts = [
+  { title: t('drx.charTitle'), body: t('drx.charBody') },
+  { title: t('drx.feedTitle'), body: t('drx.feedBody') },
+  { title: t('drx.distinguishTitle'), body: t('drx.distinguishBody') },
+  { title: t('drx.shedTitle'), body: t('drx.shedBody') },
+];
 ---
 
-<BaseLayout title={t('nav.aboutDevonRex')}>
-  <h1>{t('nav.aboutDevonRex')}</h1>
-  <p>Phase 1 placeholder — 內容於後續階段填入。</p>
+<BaseLayout title={t('drx.heroTitle')}>
+  <div class="page-drx">
+    <!-- Hero -->
+    <section class="drx-hero">
+      <img src="/images/about-cattery/hero.jpg" alt="Devon Rex cat" class="drx-hero-img" />
+      <div class="drx-hero-overlay">
+        <h1>{t('drx.heroTitle')}</h1>
+        <p class="hero-subtitle">{t('drx.subtitle')}</p>
+      </div>
+    </section>
+
+    <!-- Origin -->
+    <section class="drx-section">
+      <h2 class="drx-section-title">{t('drx.originTitle')}</h2>
+      <div class="origin-card">
+        <p>{t('drx.originBody')}</p>
+      </div>
+    </section>
+
+    <!-- More Facts -->
+    <section class="drx-section drx-section--facts">
+      <h2 class="drx-section-title">{t('drx.moreTitle')}</h2>
+      <div class="facts-list">
+        {facts.map((fact) => (
+          <div class="fact-card">
+            <h3 class="fact-title">{fact.title}</h3>
+            <p class="fact-body">{fact.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .page-drx {
+    background-color: var(--color-bg-dark);
+    min-height: 100vh;
+    font-family: var(--font-brand);
+  }
+
+  /* Hero */
+  .drx-hero {
+    position: relative;
+    height: 70vh;
+    min-height: 480px;
+    overflow: hidden;
+  }
+
+  .drx-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .drx-hero-overlay {
+    position: absolute;
+    bottom: 64px;
+    left: 64px;
+    color: white;
+  }
+
+  .drx-hero-overlay h1 {
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: 28px;
+    margin-top: 8px;
+    opacity: 0.85;
+  }
+
+  /* Sections */
+  .drx-section {
+    padding: 72px 80px;
+  }
+
+  .drx-section-title {
+    font-size: 28px;
+    text-align: center;
+    color: var(--color-text);
+    margin-bottom: 36px;
+  }
+
+  /* Origin */
+  .origin-card {
+    background: rgba(255, 255, 255, 0.55);
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 60px;
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--color-text);
+    text-align: center;
+  }
+
+  /* Facts */
+  .drx-section--facts {
+    background-color: var(--color-bg);
+  }
+
+  .facts-list {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .fact-card {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 32px 48px;
+  }
+
+  .fact-title {
+    font-size: 21px;
+    color: var(--color-text);
+    margin-bottom: 14px;
+  }
+
+  .fact-body {
+    font-size: 17px;
+    color: var(--color-text);
+    line-height: 1.75;
+  }
+</style>

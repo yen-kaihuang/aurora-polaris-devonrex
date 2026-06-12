@@ -11,7 +11,74 @@ const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 ---
 
-<BaseLayout title={t('nav.availableKittens')}>
-  <h1>{t('nav.availableKittens')}</h1>
-  <p>Phase 1 placeholder — 內容於後續階段填入。</p>
+<BaseLayout title={t('kittens.title')}>
+  <div class="page-kittens">
+    <div class="kittens-bg" aria-hidden="true">
+      <img src="/images/available-kittens/hero-bg.jpg" alt="" class="bg-img" />
+      <img src="/images/available-kittens/hero-cats.jpg" alt="" class="cats-img" />
+    </div>
+    <section class="kittens-content">
+      <h1 class="kittens-heading">{t('kittens.title')}</h1>
+      <p class="kittens-body">{t('kittens.body')}</p>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .page-kittens {
+    background-color: rgba(234, 224, 215, 0.82);
+    min-height: 100vh;
+    font-family: var(--font-brand);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kittens-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+  }
+
+  .cats-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    opacity: 0.35;
+    object-fit: cover;
+  }
+
+  .kittens-content {
+    position: relative;
+    z-index: 1;
+    padding: 180px 80px 120px;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .kittens-heading {
+    font-size: clamp(40px, 6vw, 80px);
+    color: var(--color-text);
+    margin-bottom: 48px;
+    line-height: 1.2;
+  }
+
+  .kittens-body {
+    font-size: 17px;
+    color: var(--color-text);
+    line-height: 1.8;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+</style>

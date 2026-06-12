@@ -9,9 +9,71 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
+const year = 2022;
 ---
 
-<BaseLayout title="2022 Litter">
-  <h1>2022</h1>
-  <p>Phase 1 placeholder — 內容於後續階段填入。</p>
+<BaseLayout title={t('litters.2022title')}>
+  <div class="page-litter-year">
+    <section class="litter-hero">
+      <img src="/images/home/hero.jpg" alt="Aurora Polaris Devon Rex" class="litter-hero-img" />
+      <div class="litter-hero-overlay">
+        <h1>{t('litters.2022title')}</h1>
+      </div>
+    </section>
+    <section class="litter-content">
+      <p class="litter-placeholder">
+        {lang === 'zh'
+          ? `${year} 年胎次的详细内容即将上线，敬请期待。`
+          : `Detailed profiles for the ${year} litter are coming soon.`}
+      </p>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .page-litter-year {
+    background-color: var(--color-bg);
+    font-family: var(--font-brand);
+    min-height: 100vh;
+  }
+
+  .litter-hero {
+    position: relative;
+    height: 60vh;
+    min-height: 360px;
+    overflow: hidden;
+  }
+
+  .litter-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .litter-hero-overlay {
+    position: absolute;
+    bottom: 64px;
+    left: 64px;
+    color: var(--color-text-light);
+  }
+
+  .litter-hero-overlay h1 {
+    font-size: clamp(36px, 5vw, 64px);
+  }
+
+  .litter-content {
+    padding: 80px;
+    text-align: center;
+  }
+
+  .litter-placeholder {
+    font-size: 18px;
+    color: var(--color-text);
+    opacity: 0.65;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.4);
+  }
+</style>

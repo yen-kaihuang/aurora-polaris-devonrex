@@ -11,7 +11,82 @@ const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 ---
 
-<BaseLayout title={t('nav.kingsQueens')}>
-  <h1>{t('nav.kingsQueens')}</h1>
-  <p>Phase 1 placeholder — 內容於後續階段填入。</p>
+<BaseLayout title={t('kq.title')}>
+  <div class="page-kq">
+    <section class="kq-hero">
+      <img src="/images/home/hero.jpg" alt="Aurora Polaris Devon Rex" class="kq-hero-img" />
+      <div class="kq-hero-overlay">
+        <h1>{t('kq.title')}</h1>
+      </div>
+    </section>
+
+    <section class="kq-section">
+      <h2 class="kq-section-title">{t('kq.ourKings')}</h2>
+      <p class="kq-coming">{t('kq.comingSoon')}</p>
+    </section>
+
+    <section class="kq-section kq-section--queens">
+      <h2 class="kq-section-title">{t('kq.ourQueens')}</h2>
+      <p class="kq-coming">{t('kq.comingSoon')}</p>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .page-kq {
+    background-color: var(--color-bg);
+    font-family: var(--font-brand);
+    min-height: 100vh;
+  }
+
+  .kq-hero {
+    position: relative;
+    height: 60vh;
+    min-height: 400px;
+    overflow: hidden;
+  }
+
+  .kq-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .kq-hero-overlay {
+    position: absolute;
+    bottom: 64px;
+    left: 64px;
+    color: var(--color-text-light);
+  }
+
+  .kq-hero-overlay h1 {
+    font-size: clamp(36px, 5vw, 64px);
+  }
+
+  .kq-section {
+    padding: 80px;
+  }
+
+  .kq-section--queens {
+    background-color: var(--color-bg-dark);
+  }
+
+  .kq-section-title {
+    font-size: 40px;
+    color: var(--color-text);
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .kq-coming {
+    text-align: center;
+    font-size: 17px;
+    color: var(--color-text);
+    opacity: 0.65;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.3);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+</style>
