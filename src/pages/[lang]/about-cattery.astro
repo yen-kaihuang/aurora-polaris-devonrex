@@ -11,7 +11,112 @@ const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 ---
 
-<BaseLayout title={t('nav.aboutCattery')}>
-  <h1>{t('nav.aboutCattery')}</h1>
-  <p>Phase 1 placeholder — 內容於後續階段填入。</p>
+<BaseLayout title={t('cattery.heroTitle')}>
+  <div class="page-cattery">
+    <!-- Hero -->
+    <section class="cattery-hero">
+      <img src="/images/about-cattery/hero.jpg" alt="Our cattery" class="cattery-hero-img" />
+      <div class="cattery-hero-overlay">
+        <h1>{t('cattery.heroTitle')}</h1>
+        <p class="hero-subtitle">{t('cattery.subtitle')}</p>
+      </div>
+    </section>
+
+    <!-- Section 1：貓舍介紹 -->
+    <section class="cattery-section">
+      <h2 class="section-label">{t('cattery.section1Title')}</h2>
+      <div class="content-card">
+        {t('cattery.body1').split('\n\n').map((para: string) => (
+          <p>{para}</p>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 2：飲食 -->
+    <section class="cattery-section cattery-section--diet">
+      <h2 class="section-label">{t('cattery.section2Title')}</h2>
+      <div class="content-card content-card--light">
+        {t('cattery.body2').split('\n\n').map((para: string) => (
+          <p>{para}</p>
+        ))}
+      </div>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .page-cattery {
+    background-color: var(--color-bg-dark);
+    min-height: 100vh;
+    font-family: var(--font-brand);
+  }
+
+  /* Hero */
+  .cattery-hero {
+    position: relative;
+    height: 70vh;
+    min-height: 480px;
+    overflow: hidden;
+  }
+
+  .cattery-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cattery-hero-overlay {
+    position: absolute;
+    bottom: 64px;
+    left: 64px;
+    color: white;
+  }
+
+  .cattery-hero-overlay h1 {
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: 28px;
+    margin-top: 8px;
+    opacity: 0.85;
+  }
+
+  /* Sections */
+  .cattery-section {
+    padding: 80px 80px;
+  }
+
+  .cattery-section--diet {
+    background-color: var(--color-bg-accent);
+  }
+
+  .section-label {
+    font-size: 18px;
+    color: rgba(83, 86, 92, 0.7);
+    text-align: center;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .content-card {
+    background: rgba(220, 204, 194, 0.73);
+    padding: 48px 64px;
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 17px;
+    color: white;
+    line-height: 1.75;
+    text-align: center;
+  }
+
+  .content-card--light {
+    background: rgba(255, 255, 255, 0.55);
+    color: var(--color-text);
+  }
+</style>
