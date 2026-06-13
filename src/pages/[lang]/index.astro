@@ -9,230 +9,262 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
+const base = `/${lang}`;
+
+const welcomeBody = t('home.welcomeBody').split('\n\n');
+
+const partnerLogos = [
+  '/images/d/logo-1.png',
+  '/images/d/logo-2.png',
+  '/images/d/logo-3.png',
+  '/images/d/logo-4.png',
+];
 ---
 
 <BaseLayout title={t('site.name')}>
   <!-- Hero -->
   <section class="hero">
-    <img src="/images/home/hero.jpg" alt="Aurora Polaris Devon Rex cats" class="hero-img" />
-    <div class="hero-text">
-      <h1>Aurora Polaris<br />Devon Rex</h1>
-    </div>
+    <img class="hero-cats" src="/images/d/hero-cats.png" alt="A group of Devon Rex cats" />
+    <h1 class="hero-title">Aurora Polaris<br />Devon Rex</h1>
   </section>
 
-  <!-- Welcome：「Welcome to」浮在淺色間隔，深色區塊在下方 -->
-  <div class="welcome-zone">
-    <p class="welcome-label">{t('home.welcomeLabel')}</p>
-    <section class="welcome">
-      <div class="welcome-inner">
-        <div class="welcome-photo">
-          <img src="/images/home/welcome-cat.jpg" alt="Devon Rex cat" />
-        </div>
-        <div class="welcome-content">
-          <h2 class="welcome-title">{t('home.welcomeTitle')}</h2>
-          <div class="welcome-body">
-            {t('home.welcomeBody').split('\n\n').map((para: string) => (
-              <p>{para}</p>
-            ))}
-          </div>
-        </div>
+  <!-- Welcome -->
+  <section class="welcome">
+    <div class="welcome-inner">
+      <div class="welcome-photo">
+        <img src="/images/d/welcome-cats.png" alt="Two Devon Rex cats framed by lavender" />
       </div>
-    </section>
-  </div>
-
-  <!-- Kittens Gallery -->
-  <section class="kittens">
-    <h2 class="kittens-title">{t('home.kittensTitle')}</h2>
-    <div class="kittens-grid">
-      <img src="/images/home/kitten-1.jpg" alt="Available Devon Rex kitten" />
-      <img src="/images/home/kitten-2.jpg" alt="Available Devon Rex kitten" />
-      <img src="/images/home/kitten-3.jpg" alt="Available Devon Rex kitten" />
+      <div class="welcome-text">
+        <p class="welcome-eyebrow">{t('home.welcomeLabel')}</p>
+        <h2 class="welcome-title">{t('home.welcomeTitle')}</h2>
+        <div class="prose welcome-body">
+          {welcomeBody.map((para: string) => <p>{para}</p>)}
+        </div>
+        <a class="btn" href={`${base}/about-cattery`}>{t('common.learnMore')}</a>
+      </div>
     </div>
   </section>
 
-  <!-- Why Section -->
+  <!-- Available kittens -->
+  <section class="kittens">
+    <img class="kittens-deco" src="/images/d/kittens-deco.png" alt="" aria-hidden="true" />
+    <h2 class="section-title kittens-title">{t('home.kittensTitle')}</h2>
+    <div class="kittens-grid">
+      <img src="/images/d/kitten-1.png" alt="Available Devon Rex kitten" />
+      <img src="/images/d/kitten-2.png" alt="Available Devon Rex kitten" />
+      <img src="/images/d/kitten-3.png" alt="Available Devon Rex kitten" />
+    </div>
+    <div class="kittens-cta">
+      <a class="btn" href={`${base}/available-kittens`}>{t('common.learnMore')}</a>
+    </div>
+  </section>
+
+  <!-- Why we do this -->
   <section class="why">
-    <img src="/images/home/wave-bg.svg" alt="" class="why-wave-top" aria-hidden="true" />
+    <svg class="why-wave why-wave-top" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,60 C220,4 420,4 640,52 C880,104 1080,104 1280,54 C1350,36 1400,40 1440,50 L1440,0 L0,0 Z" fill="var(--color-bg)" />
+    </svg>
     <div class="why-inner">
       <h2 class="why-title">{t('home.whyTitle')}</h2>
-      <p class="why-body">{t('home.whyBody')}</p>
+      <p class="prose why-body">{t('home.whyBody')}</p>
     </div>
-    <img src="/images/home/wave-divider.svg" alt="" class="why-wave-bottom" aria-hidden="true" />
+    <svg class="why-wave why-wave-bottom" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,70 C220,126 420,126 640,78 C880,26 1080,26 1280,76 C1350,94 1400,90 1440,80 L1440,120 L0,120 Z" fill="var(--color-bg)" />
+    </svg>
   </section>
 
-  <!-- Partner Logos -->
-  <section class="logos-section">
+  <!-- Partner logos -->
+  <section class="logos">
     <div class="logos-inner">
-      <img src="/images/home/logo-tica.png" alt="TICA" />
-      <img src="/images/home/logo-trupanion.png" alt="Trupanion" />
-      <img src="/images/home/logo-petsecure-1.png" alt="PetSecure" />
-      <img src="/images/home/logo-petsecure-2.png" alt="PetSecure" />
+      {partnerLogos.map((src) => <img src={src} alt="Registry partner" />)}
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  /* Hero */
+  /* Hero ---------------------------------------------------------------- */
   .hero {
     position: relative;
-    height: 65vh;
-    min-height: 500px;
-    background-color: var(--color-bg);
+    min-height: clamp(540px, 62vw, 900px);
+    background: var(--color-bg);
     overflow: hidden;
   }
 
-  .hero-img {
+  .hero-cats {
     position: absolute;
     right: 0;
-    top: 0;
-    width: 92%;
-    height: 100%;
-    object-fit: cover;
-    object-position: left top;
+    bottom: 0;
+    width: clamp(560px, 70vw, 1240px);
+    height: auto;
+    pointer-events: none;
   }
 
-  .hero-text {
-    position: absolute;
-    top: 22%;
-    left: 10%;
-    max-width: 480px;
-    z-index: 1;
-  }
-
-  .hero-text h1 {
+  .hero-title {
+    position: relative;
+    z-index: 2;
+    padding: clamp(150px, 19vw, 250px) var(--page-pad) 0;
     font-family: var(--font-brand);
-    font-size: clamp(48px, 6.7vw, 96px);
+    font-weight: normal;
+    font-size: clamp(46px, 8vw, 96px);
+    line-height: 1.04;
     color: var(--color-text-light);
-    line-height: 1.05;
   }
 
-  /* Welcome zone - 淺色間隔 + 深色區塊 */
-  .welcome-zone {
-    background-color: var(--color-bg);
-  }
-
-  .welcome-label {
-    font-size: clamp(20px, 2vw, 28px);
-    color: var(--color-text);
-    text-align: right;
-    padding: 32px 80px 0;
-  }
-
+  /* Welcome ------------------------------------------------------------- */
   .welcome {
-    background-color: var(--color-bg-dark);
-    padding: 80px 64px;
+    background: var(--color-band);
+    padding: clamp(56px, 7vw, 96px) var(--page-pad);
   }
 
   .welcome-inner {
     max-width: var(--max-width);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(32px, 5vw, 72px);
     align-items: center;
   }
 
   .welcome-photo img {
     width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .welcome-eyebrow {
+    font-size: clamp(20px, 2.2vw, 32px);
+    color: var(--color-text);
+    margin-bottom: 8px;
   }
 
   .welcome-title {
-    font-size: clamp(32px, 4.5vw, 60px);
-    color: var(--color-bg);
-    line-height: 1.1;
-    margin-bottom: 28px;
+    font-family: var(--font-brand);
+    font-weight: normal;
+    font-size: clamp(38px, 6vw, 96px);
+    line-height: 1.02;
+    color: var(--color-title-soft);
+    margin-bottom: clamp(20px, 2.5vw, 34px);
   }
 
   .welcome-body {
-    font-size: 17px;
-    color: var(--color-text);
-    line-height: 1.75;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+    text-align: justify;
+    margin-bottom: clamp(24px, 3vw, 36px);
   }
 
-  /* Kittens */
+  /* Kittens ------------------------------------------------------------- */
   .kittens {
-    padding: 80px 64px;
-    background-color: var(--color-bg);
+    position: relative;
+    background: var(--color-bg);
+    padding: clamp(56px, 7vw, 100px) var(--page-pad);
+    overflow: hidden;
+  }
+
+  .kittens-deco {
+    position: absolute;
+    top: clamp(40px, 6vw, 90px);
+    right: clamp(8px, 4vw, 70px);
+    width: clamp(120px, 16vw, 240px);
+    opacity: 0.95;
+    pointer-events: none;
   }
 
   .kittens-title {
-    text-align: center;
-    font-size: clamp(24px, 3.5vw, 48px);
-    color: var(--color-text);
-    margin-bottom: 48px;
+    margin-bottom: clamp(36px, 4.5vw, 60px);
   }
 
   .kittens-grid {
-    max-width: var(--max-width);
+    max-width: 1280px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: clamp(16px, 2.5vw, 40px);
   }
 
   .kittens-grid img {
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 374 / 408;
     object-fit: cover;
+    border-radius: 6px;
   }
 
-  /* Why */
-  .why {
-    background-color: var(--color-bg-accent);
+  .kittens-cta {
     text-align: center;
+    margin-top: clamp(36px, 4vw, 56px);
   }
 
-  .why-wave-top,
-  .why-wave-bottom {
+  /* Why ----------------------------------------------------------------- */
+  .why {
+    position: relative;
+    background: var(--color-band-soft);
+    padding: clamp(90px, 11vw, 150px) var(--page-pad);
+  }
+
+  .why-wave {
+    position: absolute;
+    left: 0;
     width: 100%;
+    height: clamp(60px, 8vw, 120px);
     display: block;
+  }
+  .why-wave-top {
+    top: -1px;
+  }
+  .why-wave-bottom {
+    bottom: -1px;
   }
 
   .why-inner {
-    padding: 48px 80px;
-    max-width: 1100px;
+    position: relative;
+    z-index: 1;
+    max-width: 1080px;
     margin: 0 auto;
+    text-align: center;
   }
 
   .why-title {
-    font-size: clamp(32px, 4.5vw, 60px);
+    font-family: var(--font-brand);
+    font-weight: normal;
+    font-size: clamp(34px, 5vw, 64px);
     color: var(--color-text-light);
-    margin-bottom: 28px;
+    margin-bottom: clamp(22px, 3vw, 38px);
   }
 
   .why-body {
-    font-size: 17px;
-    color: var(--color-text);
-    line-height: 1.8;
-    max-width: 880px;
-    margin: 0 auto;
+    text-align: justify;
   }
 
-  /* Partner Logos */
-  .logos-section {
-    background-color: var(--color-bg);
-    padding: 60px 80px;
+  /* Partner logos ------------------------------------------------------- */
+  .logos {
+    background: var(--color-bg);
+    padding: clamp(48px, 6vw, 80px) var(--page-pad);
   }
 
   .logos-inner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 56px;
-    flex-wrap: wrap;
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(24px, 4vw, 56px);
+    flex-wrap: wrap;
   }
 
   .logos-inner img {
-    max-height: 100px;
-    max-width: 240px;
+    max-height: clamp(70px, 9vw, 120px);
     width: auto;
     object-fit: contain;
+  }
+
+  /* Responsive ---------------------------------------------------------- */
+  @media (max-width: 860px) {
+    .welcome-inner {
+      grid-template-columns: 1fr;
+    }
+    .kittens-grid {
+      grid-template-columns: 1fr;
+      max-width: 460px;
+    }
+    .logos-inner {
+      justify-content: center;
+    }
   }
 </style>

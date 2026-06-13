@@ -4,125 +4,191 @@ import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const socials = [
+  { src: '/images/d/social-ig.png', label: 'Instagram' },
+  { src: '/images/d/social-fb.png', label: 'Facebook' },
+  { src: '/images/d/social-yt.png', label: 'YouTube' },
+  { src: '/images/d/social-tt.png', label: 'TikTok' },
+];
+
+// Alternating paw prints along the footer base
+const paws = ['a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a'];
 ---
 
 <section id="contact" class="footer-section">
-  <!-- "Contact Us" 標題在淺色背景區，波浪上方 -->
   <h2 class="contact-heading">{t('home.contactTitle')}</h2>
 
   <footer class="site-footer">
-    <img src="/images/home/wave-footer.svg" alt="" class="footer-wave" aria-hidden="true" />
+    <svg class="footer-wave" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,70 C240,10 430,5 640,55 C880,112 1080,108 1260,58 C1340,36 1400,40 1440,52 L1440,0 L0,0 Z" fill="var(--color-bg)" />
+    </svg>
 
     <div class="footer-body">
-      <div class="contact-wrap">
-        <img src="/images/home/contact-circle.svg" alt="" class="contact-circle" aria-hidden="true" />
-        <ul class="contact-list">
-          <li><a href={`mailto:${t('home.email')}`}>Email: {t('home.email')}</a></li>
-          <li>Instagram: {t('home.instagram')}</li>
-          <li>Facebook: {t('home.facebook')}</li>
-          <li>WeChat: {t('home.wechat')}</li>
-        </ul>
+      <div class="contact-col">
+        <div class="contact-circle">
+          <ul class="contact-list">
+            <li><a href={`mailto:${t('home.email')}`}>Email: {t('home.email')}</a></li>
+            <li>Instagram: {t('home.instagram')}</li>
+            <li>Facebook: {t('home.facebook')}</li>
+            <li>WeChat: {t('home.wechat')}</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="footer-copy">
+      <div class="social-col">
+        {socials.map((s) => (
+          <a class="social" href="#" aria-label={s.label}>
+            <img src={s.src} alt={s.label} />
+          </a>
+        ))}
+      </div>
+
+      <div class="copy-col">
         <p>{t('home.copyright1')}</p>
         <p>{t('home.copyright2')}</p>
       </div>
     </div>
 
     <div class="paw-row" aria-hidden="true">
-      <img src="/images/home/paw-1.png" alt="" />
-      <img src="/images/home/paw-2.png" alt="" />
-      <img src="/images/home/paw-1.png" alt="" />
-      <img src="/images/home/paw-2.png" alt="" />
-      <img src="/images/home/paw-1.png" alt="" />
-      <img src="/images/home/paw-2.png" alt="" />
+      {paws.map((p, i) => (
+        <img src={`/images/d/paw-${p}.png`} alt="" class={`paw paw-${p}`} style={`--i:${i}`} />
+      ))}
     </div>
   </footer>
 </section>
 
 <style>
-  /* 淺色包覆區（含標題） */
   .footer-section {
     background-color: var(--color-bg);
     font-family: var(--font-brand);
   }
 
   .contact-heading {
-    font-size: clamp(40px, 5vw, 64px);
+    font-weight: normal;
+    font-size: clamp(36px, 5vw, 64px);
     color: var(--color-text);
     text-align: center;
-    padding: 60px 80px 40px;
+    padding: 64px 24px 48px;
   }
 
-  /* 深色 footer 本體 */
   .site-footer {
-    background-color: var(--color-bg-dark);
+    position: relative;
+    background-color: var(--color-band);
     color: var(--color-text);
+    padding-top: 90px;
   }
 
   .footer-wave {
+    position: absolute;
+    top: -1px;
+    left: 0;
     width: 100%;
+    height: 110px;
     display: block;
-    margin-bottom: -4px;
   }
 
   .footer-body {
-    padding: 60px 80px 40px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 16px var(--page-pad) 40px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 40px;
   }
 
-  /* 聯絡資訊 + 圓圈裝飾 */
-  .contact-wrap {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 40px;
+  /* Contact circle */
+  .contact-col {
+    display: flex;
+    justify-content: center;
   }
 
   .contact-circle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 140%;
-    height: 140%;
-    opacity: 0.45;
-    pointer-events: none;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: var(--color-band-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   .contact-list {
-    position: relative;
-    z-index: 1;
-    font-size: 20px;
-    line-height: 2;
+    font-size: clamp(16px, 1.4vw, 22px);
+    line-height: 1.7;
+    color: #000;
+  }
+
+  .contact-list li + li {
+    margin-top: 14px;
   }
 
   .contact-list a {
     transition: opacity 0.2s;
   }
-
   .contact-list a:hover {
     opacity: 0.7;
   }
 
-  /* 版權 */
-  .footer-copy {
-    text-align: center;
-    font-size: 13px;
-    opacity: 0.65;
-    line-height: 1.8;
+  /* Social icons */
+  .social-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
   }
 
-  /* 爪印 */
+  .social {
+    display: block;
+    transition: transform 0.2s ease;
+  }
+  .social:hover {
+    transform: translateY(-3px);
+  }
+  .social img {
+    height: 54px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* Copyright */
+  .copy-col {
+    text-align: center;
+    font-size: 15px;
+    color: #000;
+    line-height: 1.9;
+  }
+
+  /* Paw prints */
   .paw-row {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 20px 40px 12px;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 8px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 8px var(--page-pad) 18px;
   }
 
-  .paw-row img {
-    width: 72px;
+  .paw {
+    width: clamp(48px, 7vw, 96px);
     height: auto;
-    opacity: 0.55;
+  }
+  .paw-b {
+    transform: translateY(-10px);
+  }
+
+  @media (max-width: 860px) {
+    .footer-body {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 32px;
+    }
+    .contact-circle {
+      width: 290px;
+      height: 290px;
+    }
   }
 </style>

@@ -1,0 +1,143 @@
+---
+// src/components/CatProfile.astro
+interface Props {
+  name: string;
+  color: string;
+  bloodType: string;
+  main: string;
+  thumbs: string[];
+  side?: 'left' | 'right';
+  labelColor: string;
+  labelBlood: string;
+}
+
+const {
+  name,
+  color,
+  bloodType,
+  main,
+  thumbs,
+  side = 'left',
+  labelColor,
+  labelBlood,
+} = Astro.props;
+---
+
+<article class:list={['cat', `cat--${side}`]}>
+  <div class="cat-photo">
+    <img src={main} alt={name} />
+  </div>
+
+  <div class="cat-info">
+    <div class="cat-plaque">
+      <h3 class="cat-name">{name}</h3>
+      <p class="cat-attr">{labelColor}: {color}</p>
+      <p class="cat-attr">{labelBlood}: {bloodType}</p>
+    </div>
+    <div class="cat-thumbs">
+      {thumbs.map((src) => (
+        <span class="cat-thumb"><img src={src} alt={`${name} photo`} /></span>
+      ))}
+    </div>
+  </div>
+</article>
+
+<style>
+  .cat {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 64px);
+  }
+
+  .cat--right .cat-photo {
+    order: 2;
+  }
+
+  /* Main photo with soft circular backdrop */
+  .cat-photo {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .cat-photo::before {
+    content: '';
+    position: absolute;
+    inset: -4% -2% 2% -4%;
+    border-radius: 50%;
+    background: var(--color-band-soft);
+    z-index: 0;
+  }
+
+  .cat-photo img {
+    position: relative;
+    z-index: 1;
+    width: min(420px, 88%);
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  /* Info column */
+  .cat-info {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 2vw, 26px);
+  }
+
+  .cat-plaque {
+    background: rgba(83, 86, 92, 0.85);
+    color: var(--color-text-light);
+    padding: clamp(22px, 2.6vw, 36px) clamp(24px, 3vw, 44px);
+    border-radius: 4px;
+  }
+
+  .cat-name {
+    font-family: var(--font-brand);
+    font-weight: normal;
+    font-size: clamp(28px, 3.2vw, 40px);
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .cat-attr {
+    font-size: clamp(16px, 1.5vw, 22px);
+    line-height: 1.4;
+  }
+
+  .cat-thumbs {
+    display: flex;
+    gap: clamp(12px, 1.6vw, 22px);
+    justify-content: center;
+  }
+
+  .cat-thumb {
+    display: block;
+    width: clamp(72px, 9vw, 130px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .cat-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 760px) {
+    .cat {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .cat--right .cat-photo {
+      order: 0;
+    }
+    .cat-info {
+      align-items: center;
+      text-align: center;
+    }
+  }
+</style>

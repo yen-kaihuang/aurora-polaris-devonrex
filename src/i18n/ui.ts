@@ -15,12 +15,15 @@ export const ui = {
     // 導覽
     'nav.home': 'Home',
     'nav.kingsQueens': 'Kings & Queens',
-    'nav.availableKittens': 'Available Kittens',
-    'nav.aboutCattery': 'About the Cattery',
-    'nav.aboutDevonRex': 'About Devon Rex',
-    'nav.litters': 'Litters',
+    'nav.availableKittens': 'Available Kitten',
+    'nav.aboutCattery': 'About The Cattery',
+    'nav.aboutDevonRex': 'About DRX',
+    'nav.litters': 'Litter',
+    'nav.shipping': 'Shipping',
+    'nav.adoption': 'Adoption Questionnaire',
     'nav.contact': 'Contact Us',
     'site.name': 'Aurora Polaris Devon Rex',
+    'common.learnMore': 'Learn More',
 
     // 首頁
     'home.heroTitle': 'Aurora Polaris Devon Rex',
@@ -63,8 +66,12 @@ export const ui = {
 
     // 種貓
     'kq.title': 'Kings & Queens',
+    'kq.introTitle': 'Introducing Our Kings & Queens',
+    'kq.intro': 'We take great pride in introducing you to our exquisite Devon Rexes, meticulously chosen to be a vital part of our esteemed breeding program, aimed at producing adorable and extraordinary kittens. Our Kings/Queens are from reputable breeders around the world. They all have five-generation bloodline, pedigree certificates, and passed the following genetic disease testing (FELV, FIV, HCM, CMS, etc.).',
     'kq.ourKings': 'Our Kings',
     'kq.ourQueens': 'Our Queens',
+    'kq.labelColor': 'Color',
+    'kq.labelBlood': 'Blood Type',
     'kq.comingSoon': 'King and Queen profiles are managed in our admin system. Please check back soon.',
 
     // 可售幼貓
@@ -72,13 +79,20 @@ export const ui = {
     'kittens.body': 'We prioritize waitlist families for the reservation of our kittens. Should there be any remaining kittens after the waitlist families have made their selections, we will open them up for reservation to the general public. At the moment, all our kittens have been reserved, and we do not have any available for reservation. We encourage you to stay updated with our latest announcements and future availability by following our social media channels on Instagram, Facebook, Twitter, or WeChat. Thank you for your interest in our kittens, and we look forward to connecting with you through our social media platforms.',
 
     // 胎次
-    'litters.indexTitle': 'Our Litters',
+    'litters.indexTitle': 'Our Graduate Babies',
     'litters.viewLitter': 'View Litter',
     'litters.2022title': '2022 Litter',
     'litters.2023title': '2023 Litter',
     'litters.2024title': '2024 Litter',
     'litters.2025title': '2025 Litter',
     'litters.comingSoon': 'Content coming soon.',
+    'litters.litterOf': 'Our {year} Litter',
+    'litters.kColor': 'Color',
+    'litters.kSex': 'Sex',
+    'litters.kBorn': 'Born',
+    'litters.kStatus': 'Status',
+    'litters.kBlood': 'Blood Type',
+    'litters.kLocation': 'Location',
   },
   zh: {
     // 導覽
@@ -86,10 +100,13 @@ export const ui = {
     'nav.kingsQueens': '种猫',
     'nav.availableKittens': '待售幼猫',
     'nav.aboutCattery': '关于猫舍',
-    'nav.aboutDevonRex': '关于德文卷毛猫',
+    'nav.aboutDevonRex': '关于德文猫',
     'nav.litters': '历年胎次',
+    'nav.shipping': '运送',
+    'nav.adoption': '领养问卷',
     'nav.contact': '联系我们',
     'site.name': 'Aurora Polaris Devon Rex',
+    'common.learnMore': '了解更多',
 
     // 首頁
     'home.heroTitle': 'Aurora Polaris Devon Rex',
@@ -132,8 +149,12 @@ export const ui = {
 
     // 種貓
     'kq.title': '种猫',
+    'kq.introTitle': '介绍我们的种猫',
+    'kq.intro': '我们非常自豪地向您介绍我们出色的德文卷毛猫。它们经过精心挑选，是我们备受推崇的育种计划的重要组成部分，旨在培育可爱而非凡的小猫。我们的种猫均来自世界各地的知名育种者，全部拥有五代血统、血统证书，并通过了以下遗传病检测（FELV、FIV、HCM、CMS 等）。',
     'kq.ourKings': '我们的公猫',
     'kq.ourQueens': '我们的母猫',
+    'kq.labelColor': '毛色',
+    'kq.labelBlood': '血型',
     'kq.comingSoon': '种猫资料由后台系统管理，敬请期待。',
 
     // 可售幼貓
@@ -141,13 +162,20 @@ export const ui = {
     'kittens.body': '我们优先为等候名单上的家庭预约幼猫。若等候家庭完成选择后仍有剩余幼猫，我们将向公众开放预约。目前所有幼猫均已被预约，暂无可供预约的幼猫。欢迎关注我们的 Instagram、Facebook、Twitter 或微信，及时获取最新公告和未来幼猫供应信息。感谢您对我们幼猫的关注，期待在社交媒体上与您互动。',
 
     // 胎次
-    'litters.indexTitle': '历年胎次',
+    'litters.indexTitle': '我们的毕业宝宝',
     'litters.viewLitter': '查看胎次',
     'litters.2022title': '2022 胎次',
     'litters.2023title': '2023 胎次',
     'litters.2024title': '2024 胎次',
     'litters.2025title': '2025 胎次',
     'litters.comingSoon': '内容整理中，敬请期待。',
+    'litters.litterOf': '{year} 年胎次',
+    'litters.kColor': '毛色',
+    'litters.kSex': '性别',
+    'litters.kBorn': '出生',
+    'litters.kStatus': '状态',
+    'litters.kBlood': '血型',
+    'litters.kLocation': '所在地',
   },
 } as const;
 

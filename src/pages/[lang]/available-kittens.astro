@@ -13,72 +13,59 @@ const t = useTranslations(lang);
 
 <BaseLayout title={t('kittens.title')}>
   <div class="page-kittens">
-    <div class="kittens-bg" aria-hidden="true">
-      <img src="/images/available-kittens/hero-bg.jpg" alt="" class="bg-img" />
-      <img src="/images/available-kittens/hero-cats.jpg" alt="" class="cats-img" />
-    </div>
+    <img class="kittens-bg" src="/images/d/kittens-bg.jpg" alt="" aria-hidden="true" />
+    <div class="kittens-veil" aria-hidden="true"></div>
     <section class="kittens-content">
       <h1 class="kittens-heading">{t('kittens.title')}</h1>
-      <p class="kittens-body">{t('kittens.body')}</p>
+      <p class="prose kittens-body">{t('kittens.body')}</p>
     </section>
   </div>
 </BaseLayout>
 
 <style>
   .page-kittens {
-    background-color: rgba(234, 224, 215, 0.82);
+    position: relative;
     min-height: 100vh;
     font-family: var(--font-brand);
-    position: relative;
     overflow: hidden;
+    background: var(--color-bg);
   }
 
   .kittens-bg {
     position: absolute;
     inset: 0;
-    z-index: 0;
-  }
-
-  .bg-img {
-    position: absolute;
-    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.3;
+    opacity: 0.38;
   }
 
-  .cats-img {
+  .kittens-veil {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    opacity: 0.35;
-    object-fit: cover;
+    inset: 0;
+    background: rgba(234, 224, 215, 0.55);
   }
 
   .kittens-content {
     position: relative;
     z-index: 1;
-    padding: 180px 80px 120px;
-    max-width: 1100px;
+    max-width: 1080px;
     margin: 0 auto;
+    padding: clamp(160px, 20vw, 280px) var(--page-pad) clamp(120px, 16vw, 220px);
     text-align: center;
   }
 
   .kittens-heading {
-    font-size: clamp(40px, 6vw, 80px);
+    font-family: var(--font-brand);
+    font-weight: normal;
+    font-size: clamp(40px, 5.5vw, 64px);
     color: var(--color-text);
-    margin-bottom: 48px;
-    line-height: 1.2;
+    margin-bottom: clamp(28px, 3.5vw, 44px);
   }
 
   .kittens-body {
-    font-size: 17px;
-    color: var(--color-text);
-    line-height: 1.8;
-    max-width: 880px;
+    text-align: center;
+    max-width: 940px;
     margin: 0 auto;
   }
 </style>

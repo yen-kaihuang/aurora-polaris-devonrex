@@ -11,120 +11,132 @@ const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 const base = `/${lang}`;
 
-const years = [
-  { year: 2024, key: 'litters.2024title' as const, img: '/images/home/kitten-1.jpg' },
-  { year: 2023, key: 'litters.2023title' as const, img: '/images/home/kitten-2.jpg' },
-  { year: 2022, key: 'litters.2022title' as const, img: '/images/home/kitten-3.jpg' },
+const litters = [
+  { year: 2025, key: 'litters.2025title' as const, img: '/images/d/litter-2025.png' },
+  { year: 2024, key: 'litters.2024title' as const, img: '/images/d/litter-2024.png' },
+  { year: 2023, key: 'litters.2023title' as const, img: '/images/d/litter-2023.png' },
+  { year: 2022, key: 'litters.2022title' as const, img: null },
 ];
 ---
 
 <BaseLayout title={t('litters.indexTitle')}>
   <div class="page-litters">
-    <section class="litters-hero">
-      <img src="/images/home/hero.jpg" alt="Aurora Polaris Devon Rex" class="litters-hero-img" />
-      <div class="litters-hero-overlay">
-        <h1>{t('litters.indexTitle')}</h1>
+    <header class="litters-head">
+      <div class="banner-wrap">
+        <img class="litters-banner" src="/images/d/litters-banner.png" alt="" aria-hidden="true" />
+        <h1 class="litters-title">{t('litters.indexTitle')}</h1>
       </div>
-    </section>
+    </header>
 
-    <section class="litters-index">
-      <div class="litters-grid">
-        {years.map(({ year, key, img }) => (
-          <a href={`${base}/litters/${year}`} class="litter-card">
-            <div class="litter-card-img-wrap">
-              <img src={img} alt={t(key)} class="litter-card-img" />
-            </div>
-            <p class="litter-card-label">{t(key)}</p>
-          </a>
-        ))}
-        <div class="litter-card litter-card--coming">
-          <div class="litter-card-img-wrap">
-            <img src="/images/home/kitten-1.jpg" alt={t('litters.2025title')} class="litter-card-img" />
+    <section class="litters-grid">
+      {litters.map(({ year, key, img }) => (
+        <a href={`${base}/litters/${year}`} class="litter-card">
+          <div class="litter-photo">
+            {img ? <img src={img} alt={t(key)} /> : <div class="litter-photo-empty"></div>}
           </div>
-          <p class="litter-card-label">{t('litters.2025title')}</p>
-        </div>
-      </div>
+          <p class="litter-label">{t(key)}</p>
+        </a>
+      ))}
     </section>
   </div>
 </BaseLayout>
 
 <style>
   .page-litters {
-    background-color: var(--color-bg);
+    background: var(--color-bg);
     font-family: var(--font-brand);
     min-height: 100vh;
+    padding-bottom: clamp(60px, 8vw, 110px);
   }
 
-  .litters-hero {
+  /* Header with decorative cat banner */
+  .litters-head {
+    padding: clamp(110px, 13vw, 160px) var(--page-pad) clamp(8px, 2vw, 28px);
+  }
+
+  .banner-wrap {
     position: relative;
-    height: 60vh;
-    min-height: 380px;
-    overflow: hidden;
-  }
-
-  .litters-hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-  }
-
-  .litters-hero-overlay {
-    position: absolute;
-    bottom: 64px;
-    left: 64px;
-    color: var(--color-text-light);
-  }
-
-  .litters-hero-overlay h1 {
-    font-size: clamp(36px, 5vw, 64px);
-  }
-
-  .litters-index {
-    padding: 80px 64px;
-  }
-
-  .litters-grid {
-    max-width: var(--max-width);
+    max-width: 880px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 32px;
   }
 
-  .litter-card {
+  .litters-banner {
+    width: 100%;
     display: block;
-    color: var(--color-text);
-    transition: transform 0.2s;
-  }
-
-  .litter-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .litter-card--coming {
-    opacity: 0.45;
+    opacity: 0.95;
     pointer-events: none;
   }
 
-  .litter-card-img-wrap {
-    overflow: hidden;
-    margin-bottom: 12px;
-  }
-
-  .litter-card-img {
+  .litters-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    transition: transform 0.3s;
-  }
-
-  .litter-card:hover .litter-card-img {
-    transform: scale(1.04);
-  }
-
-  .litter-card-label {
-    font-size: 22px;
     text-align: center;
+    font-family: var(--font-brand);
+    font-weight: normal;
+    font-size: clamp(38px, 5vw, 64px);
+    color: var(--color-text);
+  }
+
+  /* Litter cards */
+  .litters-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: clamp(20px, 4vw, 48px) var(--page-pad) 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(24px, 3vw, 40px);
+    justify-items: center;
+  }
+
+  .litter-card {
+    width: 100%;
+    max-width: 454px;
+    background: rgba(192, 185, 179, 0.6);
+    padding: clamp(28px, 3vw, 44px) clamp(24px, 3vw, 48px) clamp(20px, 2.5vw, 34px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(18px, 2.5vw, 34px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .litter-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px rgba(83, 86, 92, 0.18);
+  }
+
+  .litter-photo {
+    width: 100%;
+    aspect-ratio: 359 / 347;
+    overflow: hidden;
+    background: #d9d9d9;
+  }
+
+  .litter-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .litter-photo-empty {
+    width: 100%;
+    height: 100%;
+    background: #d9d9d9;
+  }
+
+  .litter-label {
+    font-size: clamp(26px, 3vw, 40px);
+    color: #fff;
+    text-align: center;
+  }
+
+  @media (max-width: 720px) {
+    .litters-grid {
+      grid-template-columns: 1fr;
+      max-width: 460px;
+    }
   }
 </style>

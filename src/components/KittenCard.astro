@@ -1,0 +1,132 @@
+---
+// src/components/KittenCard.astro
+import type { Kitten } from '../data/litter2024';
+
+interface Props extends Kitten {
+  imgBase: string;
+  bloodType: string;
+  labels: {
+    color: string;
+    sex: string;
+    born: string;
+    status: string;
+    blood: string;
+    location: string;
+  };
+}
+
+const { name, slug, color, sex, born, status, location, imgBase, bloodType, labels } = Astro.props;
+const rows = [
+  [labels.color, color],
+  [labels.sex, sex],
+  [labels.born, born],
+  [labels.status, status],
+  [labels.blood, bloodType],
+  [labels.location, location],
+];
+---
+
+<article class="kitten">
+  <div class="kitten-photo">
+    <img src={`${imgBase}/${slug}-main.png`} alt={name} />
+  </div>
+
+  <div class="kitten-info">
+    <h3 class="kitten-name">{name}</h3>
+    <dl class="kitten-detail">
+      {rows.map(([label, value]) => (
+        <div class="detail-row">
+          <dt>{label}:</dt>
+          <dd>{value}</dd>
+        </div>
+      ))}
+    </dl>
+    <div class="kitten-thumbs">
+      {[1, 2, 3].map((n) => (
+        <span class="kthumb"><img src={`${imgBase}/${slug}-${n}.png`} alt={`${name} photo ${n}`} /></span>
+      ))}
+    </div>
+  </div>
+</article>
+
+<style>
+  .kitten {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 60px);
+    max-width: 1138px;
+    margin: 0 auto;
+  }
+
+  .kitten-photo img {
+    width: 100%;
+    aspect-ratio: 471 / 542;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .kitten-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(16px, 2vw, 26px);
+  }
+
+  .kitten-name {
+    font-family: 'Bad Script', cursive;
+    font-weight: normal;
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 1;
+    color: var(--color-text);
+  }
+
+  .kitten-detail {
+    width: min(526px, 100%);
+    border: 2px solid rgba(83, 86, 92, 0.32);
+    padding: clamp(18px, 2vw, 28px) clamp(20px, 2.4vw, 34px);
+    text-align: center;
+    color: var(--color-text);
+    font-size: clamp(15px, 1.3vw, 19px);
+    line-height: 1.5;
+  }
+
+  .detail-row {
+    display: block;
+  }
+  .detail-row + .detail-row {
+    margin-top: 6px;
+  }
+  .detail-row dt,
+  .detail-row dd {
+    display: inline;
+  }
+  .detail-row dt {
+    font-weight: normal;
+  }
+
+  .kitten-thumbs {
+    display: flex;
+    gap: clamp(12px, 1.6vw, 22px);
+  }
+
+  .kthumb {
+    display: block;
+    width: clamp(84px, 9vw, 147px);
+    aspect-ratio: 1;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .kthumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 760px) {
+    .kitten {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+  }
+</style>

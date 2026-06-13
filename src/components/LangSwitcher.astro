@@ -7,37 +7,93 @@ const current = getLangFromUrl(Astro.url);
 const rest = Astro.url.pathname.replace(/^\/(en|zh)/, '') || '/';
 ---
 
-<nav aria-label="Language" class="lang-switcher">
-  <ul>
+<details class="lang-dd">
+  <summary class="lang-current" aria-label="Select language">
+    <span>{languages[current]}</span>
+    <svg class="caret" width="11" height="7" viewBox="0 0 11 7" aria-hidden="true">
+      <path d="M1 1l4.5 4.5L10 1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+    </svg>
+  </summary>
+  <ul class="lang-menu">
     {Object.entries(languages).map(([code, label]) => (
       <li>
-        {code === current
-          ? <span aria-current="true">{label}</span>
-          : <a href={`/${code}${rest}`}>{label}</a>}
+        <a href={`/${code}${rest}`} class:list={['lang-item', { active: code === current }]}>{label}</a>
       </li>
     ))}
   </ul>
-</nav>
+</details>
 
 <style>
-  .lang-switcher ul {
-    display: flex;
-    gap: 8px;
+  .lang-dd {
+    position: relative;
+    flex-shrink: 0;
+    font-family: var(--font-brand);
+  }
+
+  .lang-current {
+    display: inline-flex;
     align-items: center;
+    gap: 6px;
     font-size: 14px;
+    color: var(--color-text);
+    cursor: pointer;
+    list-style: none;
     white-space: nowrap;
+    padding: 4px 2px;
+    user-select: none;
+  }
+  /* Hide default disclosure marker across engines */
+  .lang-current::-webkit-details-marker {
+    display: none;
+  }
+  .lang-current::marker {
+    content: '';
   }
 
-  .lang-switcher span[aria-current] {
-    opacity: 0.45;
+  .caret {
+    transition: transform 0.2s ease;
+  }
+  .lang-dd[open] .caret {
+    transform: rotate(180deg);
+  }
+
+  .lang-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 132px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 28px rgba(83, 86, 92, 0.22);
+    padding: 6px;
+    z-index: 200;
+  }
+
+  .lang-item {
+    display: block;
+    padding: 9px 14px;
+    border-radius: 6px;
     font-size: 14px;
+    color: var(--color-text);
+    white-space: nowrap;
+    transition: background 0.15s ease;
   }
 
-  .lang-switcher a {
-    transition: opacity 0.2s;
+  .lang-item:hover {
+    background: var(--color-bg);
   }
 
-  .lang-switcher a:hover {
-    opacity: 0.6;
+  .lang-item.active {
+    background: var(--color-band-soft);
   }
 </style>
+
+<script>
+  // Close any open language dropdown when clicking outside of it.
+  document.addEventListener('click', (e) => {
+    const target = e.target as Node;
+    document.querySelectorAll<HTMLDetailsElement>('details.lang-dd[open]').forEach((dd) => {
+      if (!dd.contains(target)) dd.removeAttribute('open');
+    });
+  });
+</script>
