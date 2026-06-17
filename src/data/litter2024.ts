@@ -6,6 +6,7 @@ export interface Kitten {
   born: string;
   status: string;
   location: string;
+  bloodType?: string;
 }
 
 // 2024 litter roster, transcribed from the design file.

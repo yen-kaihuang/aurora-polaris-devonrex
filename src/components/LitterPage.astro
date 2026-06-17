@@ -1,0 +1,96 @@
+---
+// src/components/LitterPage.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import KittenCard from './KittenCard.astro';
+import type { Kitten } from '../data/litter2024';
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  year: number;
+  kittens: Kitten[];
+  imgBase: string;
+}
+
+const { lang, year, kittens, imgBase } = Astro.props;
+const t = useTranslations(lang);
+const title = t('litters.litterOf').replace('{year}', String(year));
+
+const labels = {
+  color: t('litters.kColor'),
+  sex: t('litters.kSex'),
+  born: t('litters.kBorn'),
+  status: t('litters.kStatus'),
+  blood: t('litters.kBlood'),
+  location: t('litters.kLocation'),
+};
+---
+
+<BaseLayout title={title}>
+  <div class="page-litter">
+    <header class="litter-banner">
+      <div class="banner-card">
+        <h1 class="banner-title">{title}</h1>
+      </div>
+    </header>
+
+    {kittens.length > 0 ? (
+      <section class="kittens">
+        {kittens.map((k) => (
+          <KittenCard {...k} imgBase={imgBase} bloodType={k.bloodType ?? 'A/b'} labels={labels} />
+        ))}
+      </section>
+    ) : (
+      <p class="litter-empty">{t('litters.comingSoon')}</p>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-litter {
+    background: var(--color-bg);
+    font-family: var(--font-brand);
+  }
+
+  .litter-banner {
+    padding: clamp(120px, 14vw, 180px) var(--page-pad) clamp(40px, 5vw, 72px);
+    display: flex;
+    justify-content: center;
+  }
+
+  .banner-card {
+    width: min(1126px, 100%);
+    background: var(--color-band-soft);
+    box-shadow:
+      0 0 0 14px var(--color-bg),
+      0 0 0 30px rgba(192, 185, 179, 0.6);
+    padding: clamp(48px, 7vw, 96px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+  }
+
+  .banner-title {
+    font-family: var(--font-brand);
+    font-weight: normal;
+    font-size: clamp(34px, 5vw, 64px);
+    color: #fff;
+    text-align: center;
+  }
+
+  .kittens {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(48px, 7vw, 96px);
+    padding: clamp(20px, 3vw, 48px) var(--page-pad) clamp(60px, 8vw, 110px);
+  }
+
+  .litter-empty {
+    text-align: center;
+    font-size: clamp(16px, 1.5vw, 20px);
+    color: var(--color-text);
+    padding: clamp(40px, 6vw, 90px) var(--page-pad) clamp(80px, 12vw, 160px);
+  }
+</style>

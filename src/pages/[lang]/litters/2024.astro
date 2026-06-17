@@ -1,8 +1,6 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import KittenCard from '../../../components/KittenCard.astro';
+import LitterPage from '../../../components/LitterPage.astro';
 import { litter2024 } from '../../../data/litter2024';
-import { useTranslations } from '../../../i18n/utils';
 import type { Lang } from '../../../i18n/ui';
 
 export function getStaticPaths() {
@@ -10,73 +8,6 @@ export function getStaticPaths() {
 }
 
 const lang = Astro.params.lang as Lang;
-const t = useTranslations(lang);
-const title = t('litters.litterOf').replace('{year}', '2024');
-
-const labels = {
-  color: t('litters.kColor'),
-  sex: t('litters.kSex'),
-  born: t('litters.kBorn'),
-  status: t('litters.kStatus'),
-  blood: t('litters.kBlood'),
-  location: t('litters.kLocation'),
-};
 ---
 
-<BaseLayout title={title}>
-  <div class="page-litter">
-    <header class="litter-banner">
-      <div class="banner-card">
-        <h1 class="banner-title">{title}</h1>
-      </div>
-    </header>
-
-    <section class="kittens">
-      {litter2024.map((k) => (
-        <KittenCard {...k} imgBase="/images/d/l2024" bloodType="A/b" labels={labels} />
-      ))}
-    </section>
-  </div>
-</BaseLayout>
-
-<style>
-  .page-litter {
-    background: var(--color-bg);
-    font-family: var(--font-brand);
-  }
-
-  /* Layered banner */
-  .litter-banner {
-    padding: clamp(120px, 14vw, 180px) var(--page-pad) clamp(40px, 5vw, 72px);
-    display: flex;
-    justify-content: center;
-  }
-
-  .banner-card {
-    width: min(1126px, 100%);
-    background: var(--color-band-soft);
-    box-shadow:
-      0 0 0 14px var(--color-bg),
-      0 0 0 30px rgba(192, 185, 179, 0.6);
-    padding: clamp(48px, 7vw, 96px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 2px;
-  }
-
-  .banner-title {
-    font-family: var(--font-brand);
-    font-weight: normal;
-    font-size: clamp(34px, 5vw, 64px);
-    color: #fff;
-    text-align: center;
-  }
-
-  .kittens {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(48px, 7vw, 96px);
-    padding: clamp(20px, 3vw, 48px) var(--page-pad) clamp(60px, 8vw, 110px);
-  }
-</style>
+<LitterPage lang={lang} year={2024} kittens={litter2024} imgBase="/images/d/l2024" />
