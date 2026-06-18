@@ -17,12 +17,12 @@ const paws = ['a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a'];
 ---
 
 <section id="contact" class="footer-section">
-  <h2 class="contact-heading">{t('home.contactTitle')}</h2>
-
   <footer class="site-footer">
     <svg class="footer-wave" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
       <path d="M0,70 C240,10 430,5 640,55 C880,112 1080,108 1260,58 C1340,36 1400,40 1440,52 L1440,0 L0,0 Z" fill="var(--color-bg)" />
     </svg>
+
+    <h2 class="contact-heading">{t('home.contactTitle')}</h2>
 
     <div class="footer-body">
       <div class="contact-col">
@@ -45,8 +45,9 @@ const paws = ['a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a'];
       </div>
 
       <div class="copy-col">
-        <p>{t('home.copyright1')}</p>
-        <p>{t('home.copyright2')}</p>
+        <p class="copy-address">{t('home.copyright1')}</p>
+        <hr class="copy-divider" />
+        <p class="copy-notice">{t('home.copyright2')}</p>
       </div>
     </div>
 
@@ -69,7 +70,7 @@ const paws = ['a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a'];
     font-size: clamp(36px, 5vw, 64px);
     color: var(--color-text);
     text-align: center;
-    padding: 64px 24px 48px;
+    padding: 40px 24px 32px;
   }
 
   .site-footer {
@@ -156,9 +157,28 @@ const paws = ['a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a'];
   /* Copyright */
   .copy-col {
     text-align: center;
-    font-size: 15px;
     color: #000;
-    line-height: 1.9;
+  }
+
+  .copy-address {
+    font-size: 13px;
+    line-height: 1.6;
+    opacity: 0.65;
+    letter-spacing: 0.03em;
+  }
+
+  .copy-divider {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 10px auto;
+    width: 80%;
+  }
+
+  .copy-notice {
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.5;
+    letter-spacing: 0.02em;
   }
 
   /* Paw prints */
