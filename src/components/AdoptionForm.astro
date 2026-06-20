@@ -1,7 +1,7 @@
 ---
 // src/components/AdoptionForm.astro
 import { useTranslations } from '../i18n/utils';
-import type { Lang } from '../i18n/ui';
+import type { Lang, UiKey } from '../i18n/ui';
 import { web3formsAccessKey, web3formsEndpoint } from '../config/forms';
 
 interface Props {
@@ -99,7 +99,7 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
         {personalityOptions.map((opt) => (
           <label class="radio">
             <input type="radio" name="personality_preference" value={opt} data-personality required />
-            <span>{t(`adoption.options.personality_preference.${opt}` as any)}</span>
+            <span>{t(`adoption.options.personality_preference.${opt}` as UiKey)}</span>
           </label>
         ))}
       </fieldset>
@@ -114,7 +114,7 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
         {ageOptions.map((opt) => (
           <label class="radio">
             <input type="radio" name="age_preference" value={opt} required />
-            <span>{t(`adoption.options.age_preference.${opt}` as any)}</span>
+            <span>{t(`adoption.options.age_preference.${opt}` as UiKey)}</span>
           </label>
         ))}
       </fieldset>
@@ -124,7 +124,7 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
         {qualityOptions.map((opt) => (
           <label class="radio">
             <input type="radio" name="quality_level" value={opt} required />
-            <span>{t(`adoption.options.quality_level.${opt}` as any)}</span>
+            <span>{t(`adoption.options.quality_level.${opt}` as UiKey)}</span>
           </label>
         ))}
       </fieldset>
@@ -134,7 +134,7 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
         {colorOptions.map((opt) => (
           <label class="radio">
             <input type="radio" name="coat_color" value={opt} required />
-            <span>{t(`adoption.options.coat_color.${opt}` as any)}</span>
+            <span>{t(`adoption.options.coat_color.${opt}` as UiKey)}</span>
           </label>
         ))}
       </fieldset>
@@ -144,7 +144,7 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
         <select name="wait_time" required>
           <option value="" disabled selected></option>
           {waitOptions.map((opt) => (
-            <option value={opt}>{t(`adoption.options.wait_time.${opt}` as any)}</option>
+            <option value={opt}>{t(`adoption.options.wait_time.${opt}` as UiKey)}</option>
           ))}
         </select>
       </label>
