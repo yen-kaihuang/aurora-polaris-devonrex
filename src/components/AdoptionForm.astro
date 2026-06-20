@@ -1,0 +1,171 @@
+---
+// src/components/AdoptionForm.astro
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+import { web3formsAccessKey, web3formsEndpoint } from '../config/forms';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+if (!web3formsAccessKey) {
+  console.warn('[adoption-questionnaire] PUBLIC_WEB3FORMS_KEY is not set. Form submissions will fail.');
+}
+
+const personalityOptions = ['outgoing', 'energetic', 'vocal', 'laid_back', 'quiet', 'energetic_relaxed', 'other'] as const;
+const ageOptions = ['kitten', 'adult'] as const;
+const qualityOptions = ['pet', 'breeding', 'show', 'retention'] as const;
+const colorOptions = ['solid', 'bicolor_van', 'calico_van', 'tabby', 'pointed'] as const;
+const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
+---
+
+<section class="adoption">
+  <header class="adoption-hero">
+    <h1>{t('adoption.heroTitle')}</h1>
+    <p>{t('adoption.intro')}</p>
+  </header>
+
+  <div class="adoption-card">
+    <div class="adoption-error" data-error hidden></div>
+
+    <form
+      class="adoption-form"
+      data-form
+      action={web3formsEndpoint}
+      method="POST"
+      novalidate
+    >
+      <input type="hidden" name="access_key" value={web3formsAccessKey} />
+      <input type="hidden" name="from_name" data-from-name value="" />
+      <input type="hidden" name="subject" data-subject value="New Adoption Application" />
+      <input type="checkbox" name="botcheck" class="adoption-honeypot" tabindex="-1" autocomplete="off" />
+
+      <div class="row two">
+        <label>
+          <span>{t('adoption.fields.first_name')}</span>
+          <input type="text" name="first_name" data-first-name required autocomplete="given-name" />
+        </label>
+        <label>
+          <span>{t('adoption.fields.last_name')}</span>
+          <input type="text" name="last_name" data-last-name required autocomplete="family-name" />
+        </label>
+      </div>
+
+      <label>
+        <span>{t('adoption.fields.email')}</span>
+        <input type="email" name="email" required autocomplete="email" />
+      </label>
+
+      <label>
+        <span>{t('adoption.fields.phone')}</span>
+        <input type="tel" name="phone" required autocomplete="tel" />
+      </label>
+
+      <label>
+        <span>{t('adoption.fields.address')}</span>
+        <input type="text" name="address" required autocomplete="street-address" />
+      </label>
+
+      <label>
+        <span>{t('adoption.fields.alt_contact')}</span>
+        <input type="text" name="alt_contact" />
+      </label>
+
+      <label>
+        <span>{t('adoption.fields.family_members')}</span>
+        <textarea name="family_members" rows="3"></textarea>
+      </label>
+
+      <label>
+        <span>{t('adoption.fields.other_pets')}</span>
+        <textarea name="other_pets" rows="3"></textarea>
+      </label>
+
+      <label>
+        <span>{t('adoption.fields.living_situation')}</span>
+        <textarea name="living_situation" rows="3"></textarea>
+      </label>
+
+      <label>
+        <span>{t('adoption.fields.interest_in_devon_rex')}</span>
+        <textarea name="interest_in_devon_rex" rows="3"></textarea>
+      </label>
+
+      <fieldset>
+        <legend>{t('adoption.fields.personality_preference')}</legend>
+        {personalityOptions.map((opt) => (
+          <label class="radio">
+            <input type="radio" name="personality_preference" value={opt} data-personality required />
+            <span>{t(`adoption.options.personality_preference.${opt}` as any)}</span>
+          </label>
+        ))}
+      </fieldset>
+
+      <label data-personality-other hidden>
+        <span>{t('adoption.fields.personality_other')}</span>
+        <textarea name="personality_other" rows="3"></textarea>
+      </label>
+
+      <fieldset>
+        <legend>{t('adoption.fields.age_preference')}</legend>
+        {ageOptions.map((opt) => (
+          <label class="radio">
+            <input type="radio" name="age_preference" value={opt} required />
+            <span>{t(`adoption.options.age_preference.${opt}` as any)}</span>
+          </label>
+        ))}
+      </fieldset>
+
+      <fieldset>
+        <legend>{t('adoption.fields.quality_level')}</legend>
+        {qualityOptions.map((opt) => (
+          <label class="radio">
+            <input type="radio" name="quality_level" value={opt} required />
+            <span>{t(`adoption.options.quality_level.${opt}` as any)}</span>
+          </label>
+        ))}
+      </fieldset>
+
+      <fieldset>
+        <legend>{t('adoption.fields.coat_color')}</legend>
+        {colorOptions.map((opt) => (
+          <label class="radio">
+            <input type="radio" name="coat_color" value={opt} required />
+            <span>{t(`adoption.options.coat_color.${opt}` as any)}</span>
+          </label>
+        ))}
+      </fieldset>
+
+      <label>
+        <span>{t('adoption.fields.wait_time')}</span>
+        <select name="wait_time" required>
+          <option value="" disabled selected></option>
+          {waitOptions.map((opt) => (
+            <option value={opt}>{t(`adoption.options.wait_time.${opt}` as any)}</option>
+          ))}
+        </select>
+      </label>
+
+      <label>
+        <span>{t('adoption.fields.referral_source')}</span>
+        <textarea name="referral_source" rows="3"></textarea>
+      </label>
+
+      <label>
+        <span>{t('adoption.fields.additional_info')}</span>
+        <textarea name="additional_info" rows="3"></textarea>
+      </label>
+
+      <button type="submit" data-submit>{t('adoption.submitButton')}</button>
+    </form>
+
+    <div class="adoption-thanks" data-thanks hidden>
+      <h2>{t('adoption.thanksTitle')}</h2>
+      <p>{t('adoption.thanksBody')}</p>
+      <a href={`/${lang}/`}>{t('adoption.backToHome')}</a>
+    </div>
+  </div>
+</section>
