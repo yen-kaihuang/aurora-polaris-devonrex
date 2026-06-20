@@ -538,6 +538,8 @@ npm run build
 
 預期：兩者皆通過。
 
+> 註：`t(\`adoption.options.personality_preference.${opt}\` as const)` 依賴 TS 對 `opt` 的 literal narrowing；如果 `astro check` 抱怨型別，可改為 `t(\`adoption.options.personality_preference.${opt}\` as UiKey)` 並 import `UiKey` 型別。
+
 - [ ] **Step 4：本地預覽手動驗證**
 
 ```bash
@@ -820,12 +822,12 @@ git commit -m "feat(adoption): 套用領養問卷頁樣式（沿用既有米色�
   }
 
   form.addEventListener('submit', async (event) => {
-    // Browser native validation runs first via reportValidity()
+    // 因為 <form novalidate>，必須先擋掉預設提交，否則無效表單會直接送到 Web3Forms 預設成功頁
+    event.preventDefault();
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    event.preventDefault();
     errorBox.hidden = true;
 
     // Populate from_name + subject from first/last name
