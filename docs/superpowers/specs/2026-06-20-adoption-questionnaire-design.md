@@ -68,8 +68,16 @@
 
 **對原網站的調整：**
 - 欄位 #1–#5 從「不限制」改為**必填**（原站缺此驗證，沒填 email / 電話會收到無法回覆的申請，視為 bug fix）。
-- 欄位 #14 顯示時保留價格區間（例如 "Pet Quality (CA\$2,500–3,000)"），與原站一致。
-- 欄位 #16 從自由輸入改為 dropdown 四選一，理由：方便貓舍依 wait time 分類處理；自由輸入會出現 "asap" / "2 months" / "as soon as possible" 等難以一致解讀的回答。
+- 欄位 #14 各等級顯示時保留價格區間（與原站一致）：
+  - `pet` → Pet Quality (CA$2,500–3,000)
+  - `breeding` → Breeding Quality (CA$3,100–4,000)
+  - `show` → Show Quality (CA$4,100–5,000)
+  - `retention` → Retention Quality (CA$5,100+)
+- 欄位 #16 從自由輸入改為 dropdown 四選一，理由：方便貓舍依 wait time 分類處理；自由輸入會出現 "asap" / "2 months" / "as soon as possible" 等難以一致解讀的回答。各選項顯示文字：
+  - `lt_3m` → Less than 3 months
+  - `3_6m` → 3–6 months
+  - `6_12m` → 6–12 months
+  - `gt_12m` → More than 12 months
 
 ### 4.2 Web3Forms 額外 hidden 欄位
 
@@ -99,7 +107,8 @@ adoption.options.<fieldName>.<optionKey>  # radio/select 選項顯示文字
 adoption.placeholders.<fieldName>  # textarea / input placeholder
 adoption.errors.required         # 必填空白原生訊息
 adoption.errors.email            # email 格式錯原生訊息
-adoption.errors.submit           # 送出失敗 banner
+adoption.errors.submit           # 送出失敗 banner（純文字，網路失敗時使用）
+adoption.errors.submitWithReason # 送出失敗 banner（含 "{reason}" 插值；用於 Web3Forms 回傳 message 時）
 adoption.submitButton            # 按鈕文字
 adoption.submitButtonSending     # 送出中文字
 adoption.thanksTitle             # 感謝訊息主標
@@ -177,8 +186,8 @@ listener:
 | 情境 | 處理 |
 |---|---|
 | 必填空白 / email 格式錯 | 瀏覽器原生提示（i18n 文字），不送出 |
-| 網路失敗（fetch reject） | 表單上方紅色 banner：`adoption.errors.submit`，附 fallback 提示「請直接寄信至 info@apdevonrex.com」 |
-| Web3Forms 回 `success: false` | 同上 banner，附 Web3Forms 回傳的 `message` 文字 |
+| 網路失敗（fetch reject） | 表單上方紅色 banner，文案使用 `adoption.errors.submit`，附 fallback 提示「請直接寄信至 info@apdevonrex.com」 |
+| Web3Forms 回 `success: false` | 表單上方紅色 banner，文案使用 `adoption.errors.submitWithReason` 並把 `{reason}` 替換為 Web3Forms 回傳的 `message` |
 | 蜜罐欄位 `botcheck` 被勾 | Web3Forms 端會擋；前端不顯示特殊提示（避免提示 bot），畫面照樣顯示「Thank you」 |
 
 ## 7. 設定與環境變數
@@ -215,7 +224,7 @@ export const web3formsEndpoint = 'https://api.web3forms.com/submit';
 ## 9. 部署與導覽
 
 - 推上 GitHub 後 Cloudflare Pages 自動部署（前提：Phase 1 Task 8 已完成；若未完成，本 spec 不阻擋 — Web3Forms 在 local dev 也能跑通）。
-- `Nav.astro:18` 的 `href: '#'` 同步改為 `\`${base}/adoption-questionnaire\``，雙語切換時保留正確路徑。
+- `Nav.astro` 中 adoption 連結項目的 `href` 從 `'#'` 改為 `` `${base}/adoption-questionnaire` ``，雙語切換時保留正確路徑。
 - Footer 不動。
 
 ## 10. 使用者需提供的資訊
