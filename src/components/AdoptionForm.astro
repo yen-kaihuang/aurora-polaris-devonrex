@@ -402,7 +402,7 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
 
   // ---- personality_other conditional ----
   const personalityRadios = form.querySelectorAll('[data-personality]');
-  const otherLabel = document.querySelector('[data-personality-other]');
+  const otherLabel = form.querySelector('[data-personality-other]');
   const otherTextarea = otherLabel?.querySelector('textarea');
   function syncPersonalityOther() {
     const selected = form.querySelector('[data-personality]:checked');
@@ -410,14 +410,15 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
     if (!otherLabel || !otherTextarea) return;
     otherLabel.hidden = !isOther;
     otherTextarea.required = isOther;
-    if (!isOther) otherTextarea.value = '';
   }
   personalityRadios.forEach((r) => r.addEventListener('change', syncPersonalityOther));
+  syncPersonalityOther();
 
   // ---- i18n native validation messages ----
   const inputs = form.querySelectorAll('input, textarea, select');
   inputs.forEach((el) => {
     el.addEventListener('invalid', () => {
+      el.setCustomValidity('');
       if (el.validity.valueMissing) {
         el.setCustomValidity(requiredMessage);
       } else if (el.validity.typeMismatch && el.type === 'email') {
