@@ -358,3 +358,75 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
     }
   }
 </style>
+
+<script is:inline define:vars={{
+  endpoint: web3formsEndpoint,
+  errorMessage: t('adoption.errors.submit'),
+  errorWithReason: t('adoption.errors.submitWithReason'),
+  submitLabel: t('adoption.submitButton'),
+  sendingLabel: t('adoption.submitButtonSending'),
+}}>
+(() => {
+  const form = document.querySelector('[data-form]');
+  if (!form) return;
+  const errorBox = document.querySelector('[data-error]');
+  const thanksBox = document.querySelector('[data-thanks]');
+  const submitBtn = form.querySelector('[data-submit]');
+  const firstNameInput = form.querySelector('[data-first-name]');
+  const lastNameInput = form.querySelector('[data-last-name]');
+  const fromNameInput = form.querySelector('[data-from-name]');
+  const subjectInput = form.querySelector('[data-subject]');
+
+  function showError(reason) {
+    if (!errorBox) return;
+    const msg = reason
+      ? errorWithReason.replace('{reason}', reason)
+      : errorMessage;
+    errorBox.textContent = msg;
+    errorBox.hidden = false;
+    errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function setSubmitting(isSending) {
+    if (!submitBtn) return;
+    submitBtn.disabled = isSending;
+    submitBtn.textContent = isSending ? sendingLabel : submitLabel;
+  }
+
+  form.addEventListener('submit', async (event) => {
+    // <form novalidate> disables browser auto-blocking — must call preventDefault first
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    errorBox.hidden = true;
+
+    // Populate from_name + subject from first/last name
+    const fullName = `${firstNameInput.value} ${lastNameInput.value}`.trim();
+    fromNameInput.value = fullName;
+    subjectInput.value = `New Adoption Application - ${fullName}`;
+
+    setSubmitting(true);
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success) {
+        form.hidden = true;
+        if (thanksBox) thanksBox.hidden = false;
+        thanksBox?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      showError(data.message || '');
+    } catch (err) {
+      showError('');
+    } finally {
+      setSubmitting(false);
+    }
+  });
+})();
+</script>
