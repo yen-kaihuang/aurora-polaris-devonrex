@@ -29,7 +29,7 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
   </header>
 
   <div class="adoption-card">
-    <div class="adoption-error" data-error hidden></div>
+    <div class="adoption-error" data-error role="alert" hidden></div>
 
     <form
       class="adoption-form"
@@ -318,6 +318,11 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
   .adoption-form button[type='submit']:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+  }
+
+  .adoption-form button[type='submit']:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
   }
 
   .adoption-honeypot {
