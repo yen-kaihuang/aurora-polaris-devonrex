@@ -12,14 +12,13 @@
 aurora-polaris-devonrex/
 ├─ src/
 │  ├─ pages/[lang]/
-│  │  └─ shipping.astro          # 新增：路由薄殼
+│  │  └─ shipping.astro          # 新增：路由薄殼（title prop 傳 t('shipping.heroTitle')）
 │  ├─ components/
-│  │  └─ ShippingInfo.astro      # 新增：頁面內容元件（HTML + scoped CSS）
-│  ├─ i18n/
-│  │  ├─ ui.ts                   # 修改：新增 shipping.* keys（en + zh）
-│  │  └─ shipping.test.ts        # 新增：keys 存在性測試
-│  └─ components/
-│     └─ Nav.astro               # 修改：shipping href 從 '#' 改為實際路徑
+│  │  ├─ ShippingInfo.astro      # 新增：頁面內容元件（HTML + scoped CSS）
+│  │  └─ Nav.astro               # 修改：shipping href 從 '#' 改為實際路徑
+│  └─ i18n/
+│     ├─ ui.ts                   # 修改：新增 shipping.* keys（en + zh）
+│     └─ shipping.test.ts        # 新增：keys 存在性測試
 ```
 
 ## i18n Keys
@@ -33,14 +32,16 @@ aurora-polaris-devonrex/
 | `shipping.m1.body` | Free home delivery or in-person pickup at our cattery. | 提供免费上门送达，或可至猫舍自行取猫。 |
 | `shipping.m2.title` | Vancouver Island BC Delivery | 温哥华岛送达 |
 | `shipping.m2.opt1Label` | Option 1: Terminal pickup | 方案一：渡轮码头交接 |
-| `shipping.m2.opt1Body` | Meet at Victoria Swartz Bay, Nanaimo Departure Bay, or an agreed terminal. Fee: ~$80–$100. | 在维多利亚 Swartz Bay、奈纳摩 Departure Bay 或约定码头交接。费用约 $80–$100。 |
+| `shipping.m2.opt1Body` | Meet at Victoria Swartz Bay, Nanaimo Departure Bay, or an agreed terminal. Fee: ~CA$80–$100. | 在维多利亚 Swartz Bay、奈纳摩 Departure Bay 或约定码头交接。费用约 CA$80–$100。 |
 | `shipping.m2.opt2Label` | Option 2: Home delivery | 方案二：上门送达 |
-| `shipping.m2.opt2Body` | Direct doorstep delivery via BC Ferries. Fee: ~$200. | 搭乘 BC Ferries 直接送至府上。费用约 $200。 |
+| `shipping.m2.opt2Body` | Direct doorstep delivery via BC Ferries. Fee: ~CA$200. | 搭乘 BC Ferries 直接送至府上。费用约 CA$200。 |
 | `shipping.m3.title` | Domestic Canada Delivery | 加拿大国内运送 |
 | `shipping.m3.body` | Cargo shipment via WestJet Cargo or similar service. Kittens travel in specialized kennels and are picked up at the designated cargo warehouse. Shipping fees are determined by the cargo company. | 通过 WestJet Cargo 等货运公司托运。幼猫将在专用航空笼中运输，到达后于指定货运仓库提取。运费由货运公司报价。 |
 | `shipping.m4.title` | International Delivery | 国际运送 |
 | `shipping.m4.body` | We partner with reputable transport companies and offer optional flight nanny services. You may choose our arranged transport or your preferred provider. | 我们与信誉良好的宠物运输公司合作，并提供随行保姆服务。您可选择由我们安排运输，或指定您信任的服务商。 |
 | `shipping.m4.feeNote` | Shipping fee estimates are available on the Pet Pros Services Facebook page. | 费用估算请参考 Pet Pros Services Facebook 页面。 |
+
+> `shipping.m4.feeNote` 以純文字呈現（不做超連結，URL 未確認）。
 
 共 15 個 key。
 
@@ -69,7 +70,7 @@ aurora-polaris-devonrex/
 
 ### Vancouver Island 子選項
 
-Method 2 的兩個 sub-option 用帶 label 的 `<dl>` 或 `<div class="sub-option">` 呈現，label 加粗，內文縮排。
+Method 2 的兩個 sub-option 用 `<dl>` / `<dt>` / `<dd>` 呈現：`<dt>` 顯示 `opt1Label` / `opt2Label`（加粗），`<dd>` 顯示對應 body 文字（縮排）。
 
 ## Testing
 
