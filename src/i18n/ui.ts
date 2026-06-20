@@ -240,7 +240,7 @@ export const ui = {
     'litters.kBlood': '血型',
     'litters.kLocation': '所在地',
 
-    // 領養問卷
+    // 领养问卷
     'adoption.heroTitle': '领养问卷',
     'adoption.intro': '我们已开放 2026 年等候名单的 20 个新名额。请填写以下问卷，让我们为每只猫咪与未来主人找到最合适的搭配。',
 
