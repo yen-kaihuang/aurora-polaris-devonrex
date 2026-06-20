@@ -169,3 +169,189 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
     </div>
   </div>
 </section>
+
+<style>
+  .adoption {
+    background: var(--color-bg);
+    font-family: var(--font-brand);
+    padding: clamp(140px, 16vw, 220px) var(--page-pad) clamp(60px, 8vw, 110px);
+  }
+
+  .adoption-hero {
+    max-width: 880px;
+    margin: 0 auto clamp(40px, 5vw, 72px);
+    text-align: center;
+  }
+
+  .adoption-hero h1 {
+    font-family: var(--font-brand);
+    font-weight: normal;
+    font-size: clamp(38px, 5.5vw, 64px);
+    color: var(--color-text);
+    margin-bottom: clamp(18px, 2.5vw, 28px);
+  }
+
+  .adoption-hero p {
+    font-size: clamp(16px, 1.4vw, 20px);
+    line-height: 1.7;
+    color: var(--color-text-light);
+  }
+
+  .adoption-card {
+    max-width: 880px;
+    margin: 0 auto;
+    background: var(--color-band-soft);
+    padding: clamp(32px, 5vw, 72px);
+    border-radius: 4px;
+  }
+
+  .adoption-error {
+    background: rgba(180, 60, 60, 0.12);
+    border: 1px solid rgba(180, 60, 60, 0.55);
+    color: #7a2b2b;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    border-radius: 4px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .adoption-form {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 2.4vw, 28px);
+  }
+
+  .adoption-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: clamp(15px, 1.2vw, 17px);
+    color: var(--color-text);
+  }
+
+  .adoption-form label > span {
+    font-weight: 500;
+  }
+
+  .adoption-form input[type='text'],
+  .adoption-form input[type='email'],
+  .adoption-form input[type='tel'],
+  .adoption-form textarea,
+  .adoption-form select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid rgba(83, 86, 92, 0.35);
+    background: rgba(255, 255, 255, 0.7);
+    font-family: inherit;
+    font-size: inherit;
+    color: var(--color-text);
+    border-radius: 3px;
+    transition: border-color 0.15s;
+  }
+
+  .adoption-form input:focus,
+  .adoption-form textarea:focus,
+  .adoption-form select:focus {
+    outline: none;
+    border-color: var(--color-text);
+  }
+
+  .adoption-form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .adoption-form .row.two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(16px, 2vw, 24px);
+  }
+
+  .adoption-form fieldset {
+    border: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .adoption-form fieldset legend {
+    font-size: clamp(15px, 1.2vw, 17px);
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--color-text);
+  }
+
+  .adoption-form .radio {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-weight: normal;
+    cursor: pointer;
+  }
+
+  .adoption-form .radio input {
+    accent-color: var(--color-text);
+  }
+
+  .adoption-form button[type='submit'] {
+    margin-top: 16px;
+    padding: 14px 32px;
+    background: var(--color-text);
+    color: #fff;
+    border: none;
+    font-family: inherit;
+    font-size: clamp(15px, 1.2vw, 17px);
+    cursor: pointer;
+    transition: opacity 0.15s;
+    align-self: center;
+    min-width: 200px;
+  }
+
+  .adoption-form button[type='submit']:hover {
+    opacity: 0.85;
+  }
+
+  .adoption-form button[type='submit']:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .adoption-honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .adoption-thanks {
+    text-align: center;
+    padding: clamp(32px, 6vw, 72px) 0;
+  }
+
+  .adoption-thanks h2 {
+    font-family: var(--font-brand);
+    font-weight: normal;
+    font-size: clamp(28px, 4vw, 44px);
+    color: var(--color-text);
+    margin-bottom: 16px;
+  }
+
+  .adoption-thanks p {
+    font-size: clamp(16px, 1.4vw, 20px);
+    color: var(--color-text-light);
+    margin-bottom: 24px;
+  }
+
+  .adoption-thanks a {
+    color: var(--color-text);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .adoption-form .row.two {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
