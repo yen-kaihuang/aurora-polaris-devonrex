@@ -365,6 +365,8 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
   errorWithReason: t('adoption.errors.submitWithReason'),
   submitLabel: t('adoption.submitButton'),
   sendingLabel: t('adoption.submitButtonSending'),
+  requiredMessage: t('adoption.errors.required'),
+  emailMessage: t('adoption.errors.email'),
 }}>
 (() => {
   const form = document.querySelector('[data-form]');
@@ -397,6 +399,34 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
     submitBtn.disabled = isSending;
     submitBtn.textContent = isSending ? sendingLabel : submitLabel;
   }
+
+  // ---- personality_other conditional ----
+  const personalityRadios = form.querySelectorAll('[data-personality]');
+  const otherLabel = document.querySelector('[data-personality-other]');
+  const otherTextarea = otherLabel?.querySelector('textarea');
+  function syncPersonalityOther() {
+    const selected = form.querySelector('[data-personality]:checked');
+    const isOther = selected?.value === 'other';
+    if (!otherLabel || !otherTextarea) return;
+    otherLabel.hidden = !isOther;
+    otherTextarea.required = isOther;
+    if (!isOther) otherTextarea.value = '';
+  }
+  personalityRadios.forEach((r) => r.addEventListener('change', syncPersonalityOther));
+
+  // ---- i18n native validation messages ----
+  const inputs = form.querySelectorAll('input, textarea, select');
+  inputs.forEach((el) => {
+    el.addEventListener('invalid', () => {
+      if (el.validity.valueMissing) {
+        el.setCustomValidity(requiredMessage);
+      } else if (el.validity.typeMismatch && el.type === 'email') {
+        el.setCustomValidity(emailMessage);
+      }
+    });
+    el.addEventListener('input', () => el.setCustomValidity(''));
+    el.addEventListener('change', () => el.setCustomValidity(''));
+  });
 
   form.addEventListener('submit', async (event) => {
     // <form novalidate> disables browser auto-blocking — must call preventDefault first
