@@ -377,6 +377,11 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
   const fromNameInput = form.querySelector('[data-from-name]');
   const subjectInput = form.querySelector('[data-subject]');
 
+  if (!errorBox || !firstNameInput || !lastNameInput || !fromNameInput || !subjectInput) {
+    console.warn('[adoption-form] Required DOM elements missing — script aborted.');
+    return;
+  }
+
   function showError(reason) {
     if (!errorBox) return;
     const msg = reason
@@ -417,12 +422,15 @@ const waitOptions = ['lt_3m', '3_6m', '6_12m', 'gt_12m'] as const;
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.success) {
         form.hidden = true;
-        if (thanksBox) thanksBox.hidden = false;
-        thanksBox?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (thanksBox) {
+          thanksBox.hidden = false;
+          thanksBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
         return;
       }
       showError(data.message || '');
     } catch (err) {
+      console.error('[adoption-form] fetch failed:', err);
       showError('');
     } finally {
       setSubmitting(false);
