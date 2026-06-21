@@ -22,3 +22,9 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Claude Code 本機設定
+.claude/
+
+# Pencil/Figma 匯出的暫存圖檔
+images/
