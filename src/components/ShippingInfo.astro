@@ -1,0 +1,16 @@
+---
+// src/components/ShippingInfo.astro
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="shipping">
+  <p>{t('shipping.heroTitle')}</p>
+</section>
