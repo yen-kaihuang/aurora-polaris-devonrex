@@ -105,24 +105,20 @@ const t = useTranslations(lang);
 
   /* Individual card */
   .method-card {
-    position: relative;
     background: var(--color-band-soft);
-    padding: clamp(28px, 4vw, 56px) clamp(28px, 4vw, 56px) clamp(28px, 4vw, 56px) clamp(60px, 7vw, 100px);
+    padding: clamp(24px, 3.5vw, 48px) clamp(28px, 4vw, 56px);
     border-radius: 4px;
-    overflow: hidden;
   }
 
-  /* Watermark number */
+  /* Watermark number — normal flow, above title */
   .method-number {
-    position: absolute;
-    top: clamp(8px, 1.2vw, 16px);
-    left: clamp(12px, 1.6vw, 24px);
-    font-size: clamp(48px, 6vw, 80px);
+    display: block;
+    font-size: clamp(52px, 6.5vw, 84px);
     font-family: var(--font-brand);
     font-weight: normal;
     color: rgba(83, 86, 92, 0.15);
-    line-height: 1;
-    pointer-events: none;
+    line-height: 0.85;
+    margin-bottom: 4px;
     user-select: none;
   }
 
@@ -136,6 +132,7 @@ const t = useTranslations(lang);
 
   .method-body {
     font-size: clamp(15px, 1.2vw, 17px);
+    font-weight: normal;
     color: var(--color-text);
     line-height: 1.7;
   }
