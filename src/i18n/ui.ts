@@ -155,6 +155,27 @@ export const ui = {
     'adoption.thanksTitle': 'Thank you!',
     'adoption.thanksBody': "We've received your application and will be in touch soon.",
     'adoption.backToHome': 'Back to home',
+
+    // Shipping
+    'shipping.heroTitle': 'Shipping Information',
+    'shipping.intro': 'AP Devon Rex offers worldwide kitten shipping to numerous countries including Canada, USA, Italy, Thailand, and China. We partner with official pet transportation cargo companies and registered flight nannies, and always prioritize kitten well-being — encouraging local adoption when possible to reduce travel stress.',
+
+    'shipping.m1.title': 'Vancouver BC Delivery',
+    'shipping.m1.area': 'Service area: Richmond, Burnaby, Coquitlam, Surrey, White Rock, Langley, Maple Ridge',
+    'shipping.m1.body': 'Free home delivery or in-person pickup at our cattery.',
+
+    'shipping.m2.title': 'Vancouver Island BC Delivery',
+    'shipping.m2.opt1Label': 'Option 1: Terminal pickup',
+    'shipping.m2.opt1Body': 'Meet at Victoria Swartz Bay, Nanaimo Departure Bay, or an agreed terminal. Fee: ~CA$80–$100.',
+    'shipping.m2.opt2Label': 'Option 2: Home delivery',
+    'shipping.m2.opt2Body': 'Direct doorstep delivery via BC Ferries. Fee: ~CA$200.',
+
+    'shipping.m3.title': 'Domestic Canada Delivery',
+    'shipping.m3.body': 'Cargo shipment via WestJet Cargo or similar service. Kittens travel in specialized kennels and are picked up at the designated cargo warehouse. Shipping fees are determined by the cargo company.',
+
+    'shipping.m4.title': 'International Delivery',
+    'shipping.m4.body': 'We partner with reputable transport companies and offer optional flight nanny services. You may choose our arranged transport or your preferred provider.',
+    'shipping.m4.feeNote': 'Shipping fee estimates are available on the Pet Pros Services Facebook page.',
   },
   zh: {
     // 導覽
@@ -300,6 +321,27 @@ export const ui = {
     'adoption.thanksTitle': '感谢您的申请！',
     'adoption.thanksBody': '我们已收到您的资料，会尽快与您联系。',
     'adoption.backToHome': '回首页',
+
+    // 运送
+    'shipping.heroTitle': '运送信息',
+    'shipping.intro': 'Aurora Polaris Devon Rex 提供全球幼猫运送服务，目的地包括加拿大、美国、意大利、泰国、中国等多个国家。我们与正规宠物运输公司及持证随行保姆合作，始终将幼猫福祉放在首位——在条件允许时优先推荐本地领养，以减少旅途压力。',
+
+    'shipping.m1.title': '大温哥华地区送达',
+    'shipping.m1.area': '服务范围：列治文、本拿比、高贵林、素里、白石镇、兰里、枫树岭',
+    'shipping.m1.body': '提供免费上门送达，或可至猫舍自行取猫。',
+
+    'shipping.m2.title': '温哥华岛送达',
+    'shipping.m2.opt1Label': '方案一：渡轮码头交接',
+    'shipping.m2.opt1Body': '在维多利亚 Swartz Bay、奈纳摩 Departure Bay 或约定码头交接。费用约 CA$80–$100。',
+    'shipping.m2.opt2Label': '方案二：上门送达',
+    'shipping.m2.opt2Body': '搭乘 BC Ferries 直接送至府上。费用约 CA$200。',
+
+    'shipping.m3.title': '加拿大国内运送',
+    'shipping.m3.body': '通过 WestJet Cargo 等货运公司托运。幼猫将在专用航空笼中运输，到达后于指定货运仓库提取。运费由货运公司报价。',
+
+    'shipping.m4.title': '国际运送',
+    'shipping.m4.body': '我们与信誉良好的宠物运输公司合作，并提供随行保姆服务。您可选择由我们安排运输，或指定您信任的服务商。',
+    'shipping.m4.feeNote': '费用估算请参考 Pet Pros Services Facebook 页面。',
   },
 } as const;
 
