@@ -34,9 +34,12 @@ const labelBlood = t('kq.labelBlood');
 
 <BaseLayout title={t('kq.title')}>
   <div class="page-kq">
-    <header class="kq-intro">
-      <h1 class="kq-intro-title">{t('kq.introTitle')}</h1>
-      <p class="prose kq-intro-body">{t('kq.intro')}</p>
+    <header class="kq-hero">
+      <img src="/images/d/kq/kq-hero.jpg" alt="Kings and Queens" class="kq-hero-img" />
+      <div class="kq-hero-text">
+        <h1 class="kq-intro-title">{t('kq.introTitle')}</h1>
+        <p class="prose kq-intro-body">{t('kq.intro')}</p>
+      </div>
     </header>
 
     <section class="kq-group">
@@ -65,9 +68,29 @@ const labelBlood = t('kq.labelBlood');
     font-family: var(--font-brand);
   }
 
-  .kq-intro {
+  .kq-hero {
+    position: relative;
+    min-height: clamp(480px, 55vw, 780px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .kq-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    opacity: 0.38;
+  }
+
+  .kq-hero-text {
+    position: relative;
+    z-index: 1;
     max-width: 980px;
-    margin: 0 auto;
     padding: clamp(140px, 16vw, 220px) var(--page-pad) clamp(20px, 3vw, 40px);
     text-align: center;
   }
@@ -79,6 +102,7 @@ const labelBlood = t('kq.labelBlood');
     line-height: 1.15;
     color: var(--color-text);
     margin-bottom: clamp(24px, 3vw, 40px);
+    white-space: pre-line;
   }
 
   .kq-intro-body {

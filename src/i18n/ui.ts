@@ -66,7 +66,7 @@ export const ui = {
 
     // 種貓
     'kq.title': 'Kings & Queens',
-    'kq.introTitle': 'Introducing Our Kings & Queens',
+    'kq.introTitle': 'Introducing Our\nKings & Queens',
     'kq.intro': 'We take great pride in introducing you to our exquisite Devon Rexes, meticulously chosen to be a vital part of our esteemed breeding program, aimed at producing adorable and extraordinary kittens. Our Kings/Queens are from reputable breeders around the world. They all have five-generation bloodline, pedigree certificates, and passed the following genetic disease testing (FELV, FIV, HCM, CMS, etc.).',
     'kq.ourKings': 'Our Kings',
     'kq.ourQueens': 'Our Queens',
