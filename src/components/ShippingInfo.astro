@@ -12,5 +12,55 @@ const t = useTranslations(lang);
 ---
 
 <section class="shipping">
-  <p>{t('shipping.heroTitle')}</p>
+  <header class="shipping-hero">
+    <h1>{t('shipping.heroTitle')}</h1>
+    <p>{t('shipping.intro')}</p>
+  </header>
+
+  <div class="shipping-methods">
+
+    <!-- Method 1: Vancouver BC -->
+    <div class="method-card">
+      <span class="method-number">#1</span>
+      <h2 class="method-title">{t('shipping.m1.title')}</h2>
+      <div class="method-body">
+        <p class="method-area">{t('shipping.m1.area')}</p>
+        <p>{t('shipping.m1.body')}</p>
+      </div>
+    </div>
+
+    <!-- Method 2: Vancouver Island -->
+    <div class="method-card">
+      <span class="method-number">#2</span>
+      <h2 class="method-title">{t('shipping.m2.title')}</h2>
+      <div class="method-body">
+        <dl class="sub-options">
+          <dt>{t('shipping.m2.opt1Label')}</dt>
+          <dd>{t('shipping.m2.opt1Body')}</dd>
+          <dt>{t('shipping.m2.opt2Label')}</dt>
+          <dd>{t('shipping.m2.opt2Body')}</dd>
+        </dl>
+      </div>
+    </div>
+
+    <!-- Method 3: Domestic Canada -->
+    <div class="method-card">
+      <span class="method-number">#3</span>
+      <h2 class="method-title">{t('shipping.m3.title')}</h2>
+      <div class="method-body">
+        <p>{t('shipping.m3.body')}</p>
+      </div>
+    </div>
+
+    <!-- Method 4: International -->
+    <div class="method-card">
+      <span class="method-number">#4</span>
+      <h2 class="method-title">{t('shipping.m4.title')}</h2>
+      <div class="method-body">
+        <p>{t('shipping.m4.body')}</p>
+        <p class="fee-note">{t('shipping.m4.feeNote')}</p>
+      </div>
+    </div>
+
+  </div>
 </section>
