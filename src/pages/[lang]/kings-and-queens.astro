@@ -3,6 +3,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CatProfile from '../../components/CatProfile.astro';
 import { useTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
+import { sanityClient } from '../../lib/sanity/client';
+import { allBreedingCatsQuery, parseCats, type BreedingCat } from '../../lib/sanity/queries';
+import { urlFor } from '../../lib/sanity/imageUrl';
 
 export function getStaticPaths() {
   return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
@@ -10,22 +13,25 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
-const b = '/images/d/kq';
 
-const kings = [
-  { name: 'Elijah', color: 'Green Yellow-Eyed White', main: `${b}/elijah-main.png`, thumbs: [`${b}/elijah-1.png`, `${b}/elijah-2.png`, `${b}/elijah-3.png`] },
-  { name: 'Richard', color: 'Red with White Spots', main: `${b}/richard-main.png`, thumbs: [`${b}/richard-1.png`, `${b}/richard-2.png`, `${b}/richard-3.png`] },
-  { name: 'Rio', color: 'Cream Bicolor', main: `${b}/rio-main.png`, thumbs: [`${b}/rio-1.png`, `${b}/rio-2.png`] },
-];
+const allCats = await sanityClient.fetch<BreedingCat[]>(allBreedingCatsQuery);
+const { kings, queens } = parseCats(allCats);
 
-const queens = [
-  { name: 'Vivian', color: 'Odd-Eyed White', main: `${b}/vivian-main.png`, thumbs: [`${b}/vivian-1.png`, `${b}/vivian-2.png`, `${b}/vivian-3.png`] },
-  { name: 'Vanda', color: 'Black Classic Tabby Bicolor', main: `${b}/vanda-main.png`, thumbs: [`${b}/vanda-1.png`, `${b}/vanda-2.png`, `${b}/vanda-3.png`] },
-  { name: 'Persimona', color: 'Red Classic Tabby', main: `${b}/persimona-main.png`, thumbs: [`${b}/persimona-1.png`, `${b}/persimona-2.png`, `${b}/persimona-3.png`] },
-  { name: 'Arya', color: 'Blue-Eyed White', main: `${b}/arya-main.png`, thumbs: [`${b}/arya-1.png`, `${b}/arya-2.png`, `${b}/arya-3.png`] },
-  { name: 'Arina', color: 'Lavender Lynx Pointed-White', main: `${b}/arina-main.png`, thumbs: [`${b}/arina-1.png`, `${b}/arina-2.png`, `${b}/arina-3.png`] },
-  { name: 'Caroline', color: 'Pure Black', main: `${b}/caroline-main.png`, thumbs: [`${b}/caroline-1.png`, `${b}/caroline-2.png`, `${b}/caroline-3.png`] },
-];
+function toProfile(cat: BreedingCat) {
+  const [main, ...rest] = cat.photos;
+  // 若 zh 翻譯尚未填，fallback 到英文，避免畫面空白
+  return {
+    name: lang === 'zh' ? (cat.nameZh || cat.nameEn) : cat.nameEn,
+    color: cat.color ?? '',
+    main: urlFor(main).width(800).url(),
+    thumbs: rest.slice(0, 3).map((p) => urlFor(p).width(300).url()),
+  };
+}
+
+const kingsProfiles = kings.map(toProfile);
+const queensProfiles = queens.map(toProfile);
+
+const emptyMsg = lang === 'zh' ? '内容整理中，敬请期待。' : 'Content coming soon.';
 
 const bloodType = 'A/b';
 const labelColor = t('kq.labelColor');
@@ -45,7 +51,9 @@ const labelBlood = t('kq.labelBlood');
     <section class="kq-group">
       <h2 class="kq-group-title">{t('kq.ourKings')}</h2>
       <div class="kq-list">
-        {kings.map((cat, i) => (
+        {kingsProfiles.length === 0 ? (
+          <p class="kq-empty">{emptyMsg}</p>
+        ) : kingsProfiles.map((cat, i) => (
           <CatProfile {...cat} bloodType={bloodType} side={i % 2 === 0 ? 'left' : 'right'} labelColor={labelColor} labelBlood={labelBlood} />
         ))}
       </div>
@@ -54,7 +62,9 @@ const labelBlood = t('kq.labelBlood');
     <section class="kq-group">
       <h2 class="kq-group-title">{t('kq.ourQueens')}</h2>
       <div class="kq-list">
-        {queens.map((cat, i) => (
+        {queensProfiles.length === 0 ? (
+          <p class="kq-empty">{emptyMsg}</p>
+        ) : queensProfiles.map((cat, i) => (
           <CatProfile {...cat} bloodType={bloodType} side={i % 2 === 0 ? 'right' : 'left'} labelColor={labelColor} labelBlood={labelBlood} />
         ))}
       </div>
@@ -128,5 +138,12 @@ const labelBlood = t('kq.labelBlood');
     display: flex;
     flex-direction: column;
     gap: clamp(56px, 8vw, 110px);
+  }
+
+  .kq-empty {
+    text-align: center;
+    color: var(--color-text);
+    font-size: clamp(18px, 2vw, 24px);
+    opacity: 0.7;
   }
 </style>
