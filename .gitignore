@@ -28,3 +28,12 @@ pnpm-debug.log*
 
 # Pencil/Figma 匯出的暫存圖檔
 images/
+
+# Sanity Studio
+studio/dist/
+studio/node_modules/
+studio/.sanity/
+studio/.env
+
+# 本機環境變數（含 Sanity write token）
+.env.local
