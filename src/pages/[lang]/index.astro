@@ -2,6 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
+import { sanityClient } from '../../lib/sanity/client';
+import { allAvailableKittensQuery, type AvailableKitten } from '../../lib/sanity/queries';
+import { urlFor } from '../../lib/sanity/imageUrl';
 
 export function getStaticPaths() {
   return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
@@ -12,6 +15,12 @@ const t = useTranslations(lang);
 const base = `/${lang}`;
 
 const welcomeBody = t('home.welcomeBody').split('\n\n');
+
+const kittens = await sanityClient.fetch<AvailableKitten[]>(allAvailableKittensQuery);
+const kittenThumbs = kittens.map((k) => ({
+  src: urlFor(k.photos[0]).width(500).url(),
+  alt: lang === 'zh' ? (k.nameZh || k.nameEn) : k.nameEn,
+}));
 
 const partnerLogos = [
   '/images/d/logo-1.png',
@@ -46,18 +55,50 @@ const partnerLogos = [
   </section>
 
   <!-- Available kittens -->
-  <section class="kittens">
-    <img class="kittens-deco" src="/images/d/kittens-deco.png" alt="" aria-hidden="true" />
-    <h2 class="section-title kittens-title">{t('home.kittensTitle')}</h2>
-    <div class="kittens-grid">
-      <img src="/images/d/kitten-1.png" alt="Available Devon Rex kitten" />
-      <img src="/images/d/kitten-2.png" alt="Available Devon Rex kitten" />
-      <img src="/images/d/kitten-3.png" alt="Available Devon Rex kitten" />
-    </div>
-    <div class="kittens-cta">
-      <a class="btn" href={`${base}/available-kittens`}>{t('common.learnMore')}</a>
-    </div>
-  </section>
+  {kittenThumbs.length > 0 && (
+    <section class="kittens">
+      <h2 class="section-title kittens-title">{t('home.kittensTitle')}</h2>
+      <div class="kittens-row">
+        <div class="kittens-grid" data-kittens-grid data-count={kittenThumbs.length}>
+          {kittenThumbs.map((k) => (
+            <img src={k.src} alt={k.alt} />
+          ))}
+        </div>
+        {kittenThumbs.length > 3 && (
+          <button
+            type="button"
+            class="kittens-arrow"
+            data-kittens-arrow
+            aria-label={lang === 'zh' ? '下一張' : 'Next'}
+          >
+            <img src="/images/d/kittens-deco.png" alt="" aria-hidden="true" />
+          </button>
+        )}
+      </div>
+      <div class="kittens-cta">
+        <a class="btn" href={`${base}/available-kittens`}>{t('common.learnMore')}</a>
+      </div>
+    </section>
+  )}
+
+  <script>
+    const grid = document.querySelector<HTMLElement>('[data-kittens-grid]');
+    const arrow = document.querySelector<HTMLButtonElement>('[data-kittens-arrow]');
+    if (grid && arrow) {
+      arrow.addEventListener('click', () => {
+        const first = grid.children[0] as HTMLElement | undefined;
+        if (!first) return;
+        const gap = parseFloat(getComputedStyle(grid).columnGap || '0');
+        const step = first.offsetWidth + gap;
+        const atEnd = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 2;
+        if (atEnd) {
+          grid.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          grid.scrollBy({ left: step, behavior: 'smooth' });
+        }
+      });
+    }
+  </script>
 
   <!-- Why we do this -->
   <section class="why">
@@ -158,32 +199,73 @@ const partnerLogos = [
     overflow: hidden;
   }
 
-  .kittens-deco {
-    position: absolute;
-    top: clamp(40px, 6vw, 90px);
-    right: clamp(8px, 4vw, 70px);
-    width: clamp(120px, 16vw, 240px);
-    opacity: 0.95;
-    pointer-events: none;
-  }
-
   .kittens-title {
     margin-bottom: clamp(36px, 4.5vw, 60px);
   }
 
-  .kittens-grid {
+  .kittens-row {
     max-width: 1280px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    align-items: center;
     gap: clamp(16px, 2.5vw, 40px);
   }
 
-  .kittens-grid img {
+  .kittens-grid {
+    flex: 1;
+    min-width: 0;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - clamp(32px, 5vw, 80px)) / 3);
+    gap: clamp(16px, 2.5vw, 40px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .kittens-grid::-webkit-scrollbar { display: none; }
+
+  /* ≤ 3 隻時不需 carousel，置中以免單張照片孤伶伶卡左邊 */
+  .kittens-grid[data-count="1"] {
+    grid-auto-columns: min(374px, 100%);
+    justify-content: center;
+    overflow: visible;
+  }
+  .kittens-grid[data-count="2"] {
+    grid-auto-columns: min(calc((800px - clamp(16px, 2.5vw, 40px)) / 2), calc((100% - clamp(16px, 2.5vw, 40px)) / 2));
+    justify-content: center;
+    overflow: visible;
+  }
+  .kittens-grid[data-count="3"] { overflow: visible; }
+
+  .kittens-grid > img {
     width: 100%;
     aspect-ratio: 374 / 408;
     object-fit: cover;
     border-radius: 6px;
+    scroll-snap-align: start;
+  }
+
+  .kittens-arrow {
+    flex-shrink: 0;
+    width: clamp(80px, 10vw, 140px);
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0.95;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .kittens-arrow:hover { transform: translateX(4px); }
+  .kittens-arrow:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+  .kittens-arrow img {
+    width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: none;
   }
 
   .kittens-cta {
@@ -260,8 +342,10 @@ const partnerLogos = [
       grid-template-columns: 1fr;
     }
     .kittens-grid {
-      grid-template-columns: 1fr;
-      max-width: 460px;
+      grid-auto-columns: 80%;
+    }
+    .kittens-arrow {
+      display: none;
     }
     .logos-inner {
       justify-content: center;
