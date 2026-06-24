@@ -46,19 +46,19 @@ const cards = kittens.map(toCard);
 
 <BaseLayout title={t('kittens.title')}>
   <div class="page-kittens">
-    <header class="kittens-hero">
-      <img class="kittens-bg" src="/images/d/kittens-bg.jpg" alt="" aria-hidden="true" />
-      <div class="kittens-veil" aria-hidden="true"></div>
-      <section class="kittens-content">
-        <h1 class="kittens-heading">{t('kittens.title')}</h1>
-        <p class="kittens-tagline">{t('kittens.tagline')}</p>
-        <p class="prose kittens-body">{t('kittens.body')}</p>
-      </section>
-    </header>
-
-    {cards.length > 0 && (
+    {cards.length === 0 ? (
+      <header class="kittens-hero">
+        <img class="kittens-bg" src="/images/d/kittens-bg.jpg" alt="" aria-hidden="true" />
+        <div class="kittens-veil" aria-hidden="true"></div>
+        <section class="kittens-content">
+          <h1 class="kittens-heading">{t('kittens.title')}</h1>
+          <p class="kittens-tagline">{t('kittens.tagline')}</p>
+          <p class="prose kittens-body">{t('kittens.body')}</p>
+        </section>
+      </header>
+    ) : (
       <section class="kittens-list">
-        <h2 class="kittens-list-title">{t('kittens.recentTitle')}</h2>
+        <h1 class="kittens-list-title">{t('kittens.recentTitle')}</h1>
         <div class="kittens-list-grid">
           {cards.map((c) => (
             <KittenCard {...c} labels={labels} />
@@ -129,13 +129,13 @@ const cards = kittens.map(toCard);
 
   /* List ---------------------------------------------------------------- */
   .kittens-list {
-    padding: clamp(60px, 8vw, 110px) var(--page-pad);
+    padding: clamp(140px, 16vw, 220px) var(--page-pad) clamp(60px, 8vw, 110px);
   }
 
   .kittens-list-title {
     font-family: var(--font-brand);
     font-weight: normal;
-    font-size: clamp(32px, 4.5vw, 56px);
+    font-size: clamp(36px, 5vw, 64px);
     color: var(--color-text);
     text-align: center;
     margin-bottom: clamp(40px, 5vw, 72px);
