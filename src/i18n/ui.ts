@@ -78,6 +78,13 @@ export const ui = {
     'kittens.title': 'Available Kittens',
     'kittens.tagline': 'No kittens available at this time — follow us to be the first to know!',
     'kittens.body': 'We prioritize waitlist families for the reservation of our kittens. Should there be any remaining kittens after the waitlist families have made their selections, we will open them up for reservation to the general public. At the moment, all our kittens have been reserved, and we do not have any available for reservation. We encourage you to stay updated with our latest announcements and future availability by following our social media channels on Instagram, Facebook, Twitter, or WeChat. Thank you for your interest in our kittens, and we look forward to connecting with you through our social media platforms.',
+    'kittens.recentTitle': 'Our Recent Available Kittens',
+    'kittens.sexMale': 'Male',
+    'kittens.sexFemale': 'Female',
+    'kittens.statusAvailable': 'Available',
+    'kittens.statusReserved': 'Reserved',
+    'kittens.location': 'Richmond, BC Canada',
+    'kittens.bloodType': 'A/b',
 
     // 胎次
     'litters.indexTitle': 'Our Graduate Babies',
@@ -244,6 +251,13 @@ export const ui = {
     'kittens.title': '待售幼猫',
     'kittens.tagline': '目前暫無幼貓可預約，歡迎追蹤我們第一時間掌握消息！',
     'kittens.body': '我们优先为等候名单上的家庭预约幼猫。若等候家庭完成选择后仍有剩余幼猫，我们将向公众开放预约。目前所有幼猫均已被预约，暂无可供预约的幼猫。欢迎关注我们的 Instagram、Facebook、Twitter 或微信，及时获取最新公告和未来幼猫供应信息。感谢您对我们幼猫的关注，期待在社交媒体上与您互动。',
+    'kittens.recentTitle': '最新待售幼猫',
+    'kittens.sexMale': '雄',
+    'kittens.sexFemale': '雌',
+    'kittens.statusAvailable': '可预约',
+    'kittens.statusReserved': '已预订',
+    'kittens.location': '加拿大 BC 列治文',
+    'kittens.bloodType': 'A/b',
 
     // 胎次
     'litters.indexTitle': '我们的毕业宝宝',

@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { allBreedingCatsQuery, parseCats, type BreedingCat } from './queries';
+import {
+  allBreedingCatsQuery,
+  parseCats,
+  type BreedingCat,
+  allAvailableKittensQuery,
+} from './queries';
 
 describe('allBreedingCatsQuery', () => {
   it('查詢字串包含必要欄位', () => {
@@ -51,5 +56,17 @@ describe('parseCats', () => {
     const { kings, queens } = parseCats([]);
     expect(kings).toEqual([]);
     expect(queens).toEqual([]);
+  });
+});
+
+describe('allAvailableKittensQuery', () => {
+  it('查詢字串包含必要欄位', () => {
+    expect(allAvailableKittensQuery).toContain('availableKitten');
+    expect(allAvailableKittensQuery).toContain('nameEn');
+    expect(allAvailableKittensQuery).toContain('nameZh');
+    expect(allAvailableKittensQuery).toContain('gender');
+    expect(allAvailableKittensQuery).toContain('status');
+    expect(allAvailableKittensQuery).toContain('birthday');
+    expect(allAvailableKittensQuery).toContain('photos');
   });
 });

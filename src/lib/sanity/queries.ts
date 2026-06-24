@@ -30,3 +30,29 @@ export function parseCats(cats: BreedingCat[]): { kings: BreedingCat[]; queens: 
     queens: cats.filter((c) => c.role === 'queen'),
   };
 }
+
+export interface AvailableKitten {
+  _id: string;
+  nameEn: string;
+  nameZh: string;
+  photos: { asset: { _ref: string } }[];
+  gender: 'male' | 'female';
+  color: string | null;
+  birthday: string | null;
+  status: 'available' | 'reserved';
+  introEn: string | null;
+  introZh: string | null;
+}
+
+export const allAvailableKittensQuery = `*[_type == "availableKitten"] | order(_createdAt asc) {
+  _id,
+  nameEn,
+  nameZh,
+  photos,
+  gender,
+  color,
+  birthday,
+  status,
+  introEn,
+  introZh
+}`;

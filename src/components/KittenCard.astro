@@ -1,10 +1,15 @@
 ---
 // src/components/KittenCard.astro
-import type { Kitten } from '../data/litter2024';
-
-interface Props extends Kitten {
-  imgBase: string;
+interface Props {
+  name: string;
+  color: string;
+  sex: string;
+  born: string;
+  status: string;
+  location: string;
   bloodType: string;
+  mainUrl: string;
+  thumbUrls: string[];
   labels: {
     color: string;
     sex: string;
@@ -15,7 +20,7 @@ interface Props extends Kitten {
   };
 }
 
-const { name, slug, color, sex, born, status, location, imgBase, bloodType, labels } = Astro.props;
+const { name, color, sex, born, status, location, mainUrl, thumbUrls, bloodType, labels } = Astro.props;
 const rows = [
   [labels.color, color],
   [labels.sex, sex],
@@ -28,7 +33,7 @@ const rows = [
 
 <article class="kitten">
   <div class="kitten-photo">
-    <img src={`${imgBase}/${slug}-main.png`} alt={name} />
+    <img src={mainUrl} alt={name} />
   </div>
 
   <div class="kitten-info">
@@ -42,8 +47,8 @@ const rows = [
       ))}
     </dl>
     <div class="kitten-thumbs">
-      {[1, 2, 3].map((n) => (
-        <span class="kthumb"><img src={`${imgBase}/${slug}-${n}.png`} alt={`${name} photo ${n}`} /></span>
+      {thumbUrls.slice(0, 3).map((src, i) => (
+        <span class="kthumb"><img src={src} alt={`${name} photo ${i + 1}`} /></span>
       ))}
     </div>
   </div>

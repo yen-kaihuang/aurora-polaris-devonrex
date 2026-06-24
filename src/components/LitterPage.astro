@@ -38,7 +38,13 @@ const labels = {
     {kittens.length > 0 ? (
       <section class="kittens">
         {kittens.map((k) => (
-          <KittenCard {...k} imgBase={imgBase} bloodType={k.bloodType ?? 'A/b'} labels={labels} />
+          <KittenCard
+            {...k}
+            mainUrl={`${imgBase}/${k.slug}-main.png`}
+            thumbUrls={[1, 2, 3].map((n) => `${imgBase}/${k.slug}-${n}.png`)}
+            bloodType={k.bloodType ?? 'A/b'}
+            labels={labels}
+          />
         ))}
       </section>
     ) : (

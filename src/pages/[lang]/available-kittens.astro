@@ -1,7 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import KittenCard from '../../components/KittenCard.astro';
 import { useTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
+import { sanityClient } from '../../lib/sanity/client';
+import { allAvailableKittensQuery, type AvailableKitten } from '../../lib/sanity/queries';
+import { urlFor } from '../../lib/sanity/imageUrl';
+import { formatBirthday } from '../../lib/format/date';
 
 export function getStaticPaths() {
   return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
@@ -9,27 +14,72 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
+
+const kittens = await sanityClient.fetch<AvailableKitten[]>(allAvailableKittensQuery);
+
+const labels = {
+  color: t('litters.kColor'),
+  sex: t('litters.kSex'),
+  born: t('litters.kBorn'),
+  status: t('litters.kStatus'),
+  blood: t('litters.kBlood'),
+  location: t('litters.kLocation'),
+};
+
+function toCard(k: AvailableKitten) {
+  const [main, ...rest] = k.photos;
+  return {
+    name: lang === 'zh' ? (k.nameZh || k.nameEn) : k.nameEn,
+    color: k.color ?? '',
+    sex: k.gender === 'male' ? t('kittens.sexMale') : t('kittens.sexFemale'),
+    born: formatBirthday(k.birthday, lang),
+    status: k.status === 'available' ? t('kittens.statusAvailable') : t('kittens.statusReserved'),
+    location: t('kittens.location'),
+    bloodType: t('kittens.bloodType'),
+    mainUrl: urlFor(main).width(700).url(),
+    thumbUrls: rest.slice(0, 3).map((p) => urlFor(p).width(300).url()),
+  };
+}
+
+const cards = kittens.map(toCard);
 ---
 
 <BaseLayout title={t('kittens.title')}>
   <div class="page-kittens">
-    <img class="kittens-bg" src="/images/d/kittens-bg.jpg" alt="" aria-hidden="true" />
-    <div class="kittens-veil" aria-hidden="true"></div>
-    <section class="kittens-content">
-      <h1 class="kittens-heading">{t('kittens.title')}</h1>
-      <p class="kittens-tagline">{t('kittens.tagline')}</p>
-      <p class="prose kittens-body">{t('kittens.body')}</p>
-    </section>
+    <header class="kittens-hero">
+      <img class="kittens-bg" src="/images/d/kittens-bg.jpg" alt="" aria-hidden="true" />
+      <div class="kittens-veil" aria-hidden="true"></div>
+      <section class="kittens-content">
+        <h1 class="kittens-heading">{t('kittens.title')}</h1>
+        <p class="kittens-tagline">{t('kittens.tagline')}</p>
+        <p class="prose kittens-body">{t('kittens.body')}</p>
+      </section>
+    </header>
+
+    {cards.length > 0 && (
+      <section class="kittens-list">
+        <h2 class="kittens-list-title">{t('kittens.recentTitle')}</h2>
+        <div class="kittens-list-grid">
+          {cards.map((c) => (
+            <KittenCard {...c} labels={labels} />
+          ))}
+        </div>
+      </section>
+    )}
   </div>
 </BaseLayout>
 
 <style>
   .page-kittens {
+    font-family: var(--font-brand);
+    background: var(--color-bg);
+  }
+
+  /* Hero ---------------------------------------------------------------- */
+  .kittens-hero {
     position: relative;
     min-height: 100vh;
-    font-family: var(--font-brand);
     overflow: hidden;
-    background: var(--color-bg);
   }
 
   .kittens-bg {
@@ -75,5 +125,25 @@ const t = useTranslations(lang);
     text-align: center;
     max-width: 940px;
     margin: 0 auto;
+  }
+
+  /* List ---------------------------------------------------------------- */
+  .kittens-list {
+    padding: clamp(60px, 8vw, 110px) var(--page-pad);
+  }
+
+  .kittens-list-title {
+    font-family: var(--font-brand);
+    font-weight: normal;
+    font-size: clamp(32px, 4.5vw, 56px);
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: clamp(40px, 5vw, 72px);
+  }
+
+  .kittens-list-grid {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(48px, 6vw, 90px);
   }
 </style>
