@@ -26,8 +26,8 @@ pnpm-debug.log*
 # Claude Code 本機設定
 .claude/
 
-# Pencil/Figma 匯出的暫存圖檔
-images/
+# Pencil/Figma 匯出的暫存圖檔（只忽略根目錄那個，不影響 public/images）
+/images/
 
 # Sanity Studio
 studio/dist/
