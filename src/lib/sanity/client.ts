@@ -13,6 +13,8 @@ export const sanityClient = createClient({
   projectId,
   dataset,
   apiVersion: '2025-01-01',
-  // build 時走 CDN 加速；若日後接 preview mode 並帶 token，須改為 false 以避免快取
-  useCdn: true,
+  // 走 API 而非 CDN。原因：Sanity webhook 在 publish 後立即觸發 Cloudflare build，
+  // 但 apicdn 同步約需 30–60 秒，常出現「部署成功但網站沒新資料」。走 API 雖然
+  // 慢一點，但能確保 build 拿到最新內容。
+  useCdn: false,
 });
